@@ -1,0 +1,29 @@
+=========    GIT    =========
+# Проверить привязанный репозиторий git remote -v
+# Проверить ветку git branch, сделать main, git branch -M main
+# отвязать репозиторий git remote remove origin
+# привязать репозиторий, git init далее git remote add origin https://github.com/GreenYA992/repo.git
+# пуш git push -u origin main или -f
+
+=========    VENV    =========
+# Виртуальное окружение python - m venv .
+# Запускаем виртуальное пространство - ".venv\Scripts\activate", выключить "deactivate"
+
+========   Install   ========
+python -m install Django==5.2 или (venv) pip install django==5.2
+(venv) pip install django-debug-toolbar
+
+=========    HELP    =========
+# python manage.py help # выводит список команд
+
+========   Project   ========
+# django-admin startproject django_project (Создаем проект на Django "django_project")
+# python manage.py startapp employees (Создаем приложение "employees")
+# python manage.py startapp workplaces (Создаем приложение "workplaces")
+# Запуск сервера python manage.py runserver (python django_project/manage.py runserver)
+
+# pip install black isort
+# Команда "black ." форматирует все файлы .py в текущей папке и под-папках.
+# Команда "isort ." Сортирует импорты в Python-файлах
+
+# pip freeze > requirements.txt
