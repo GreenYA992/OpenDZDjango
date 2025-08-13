@@ -30,7 +30,7 @@ python manage.py shell запускаем консоль
 from employees.models import Skill импортируем class Skill
 Skill.objects.create(name='devops') добавляем объект
 from employees.models import Employee
-Employee.objects.create_user(gender='M', username='Green', password='12345', first_name='Григорий', last_name='Погодин', description='test')
+Employee.objects.create_user(gender='M', username='New_USSSR', email='New_USSSR@mail.ru', password='12345')
 EmployeeSkill.objects.create(employee=Employee.objects.get(id=1), skill=Skill.objects.get(name='backend'), level=8)
 Skill.objects.all() или .get(id=1) для конкретного объекта
 Skill.objects.get(id=1).update(name='') Изменить название навыка

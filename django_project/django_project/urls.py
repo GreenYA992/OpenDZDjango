@@ -19,7 +19,10 @@ import debug_toolbar
 from django.contrib import admin
 from django.urls import include, path
 
+# noinspection PyUnresolvedReferences
 from employees import views as employees_views
+
+# noinspection PyUnresolvedReferences
 from workplaces import views as workplaces_views
 
 urlpatterns = [

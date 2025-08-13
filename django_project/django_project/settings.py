@@ -38,6 +38,7 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
     "django.contrib.admin",
+
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -45,12 +46,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # debug_toolbar обязательно ниже, чем 'django.contrib.staticfiles'
     "debug_toolbar",
+
     # Модули (Приложения)
-    "workplaces",
     "employees",
+    "workplaces",
 ]
 
-AUTH_USER_MODEL = 'employees.Employee'
+AUTH_USER_MODEL = "employees.Employee"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -116,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "ru"
+LANGUAGE_CODE = "ru-RU"
 
 TIME_ZONE = "UTC"
 
