@@ -14,5 +14,9 @@ class Workplace(models.Model):
     )
     additional_info = models.TextField(blank=True, verbose_name="Дополнительная информация")
 
+    class Meta:
+        verbose_name = 'Рабочее место'
+        verbose_name_plural = 'Рабочие места'
+
     def __str__(self):
         return f"Рабочее место #{self.desk_number}"
