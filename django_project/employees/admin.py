@@ -3,15 +3,22 @@ from django.contrib.auth.admin import UserAdmin
 
 # noinspection PyUnresolvedReferences
 from .models import Employee, EmployeeSkill
+# noinspection PyUnresolvedReferences
+from import_export import resources
+# noinspection PyUnresolvedReferences
+from import_export.admin import ImportExportModelAdmin
 
+class EmployeesResource(resources.ModelResource):
+    class Meta:
+        model = Employee
 
 class EmployeeSkillInline(admin.TabularInline):
     model = EmployeeSkill
-    extra = 1
+    extra = 0
 
 @admin.register(Employee)
-class CustomUserAdmin(UserAdmin):
-#class EmployeeAdmin(UserAdmin):
+class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
+    resource_class = EmployeesResource
     #filter_horizontal = ('groups', 'user_permissions')
     list_display = (
         "username",

@@ -33,6 +33,11 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+# noinspection PyUnresolvedReferences
+from import_export.formats.base_formats import CSV, XLSX, JSON
+IMPORT_FORMATS = [CSV, XLSX]
+EXPORT_FORMATS = [CSV, XLSX, JSON]
+
 
 # Application definition
 
@@ -46,6 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # debug_toolbar обязательно ниже, чем 'django.contrib.staticfiles'
     "debug_toolbar",
+    "import_export",
 
     # Модули (Приложения)
     "employees",
@@ -53,6 +59,7 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = "employees.Employee"
+#AUTH_USER_MODEL = 'auth.Employee'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
