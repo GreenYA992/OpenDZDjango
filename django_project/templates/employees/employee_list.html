@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Шаблон страницы со списком сотрудников</h1>
+    <table border="1">
+        <tr>
+            <th>username</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Пол</th>
+        </tr>
+        {% for employee in employees %}
+        <tr>
+            <td>{{ employee.username }}</td>
+            <td>{{ employee.last_name }}</td>
+            <td>{{ employee.first_name }}</td>
+            <td>{{ employee.gender }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Нет сотрудников</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <ul>
+        {% for employee in employees %}
+        <li>
+            {{ forloop.counter }} <br> <!-- С ноля {{ forloop.counter0 }} -->
+            ID: {{ employee.id }}
+            <a href="{% url 'employees:detail' employee.id %}"> Подробнее </a><br>
+            <!-- app_name:name='detail' (из employees/urls) -->
+            Имя пользователя: {{ employee.username }}<br>
+            Фамилия: {{ employee.last_name }}<br>
+            Имя: {{ employee.first_name }}<br>
+            Пол: {{ employee.gender }}
+        </li>
+        {% empty %}
+        <li>Список сотрудников пуст</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

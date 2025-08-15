@@ -4,6 +4,7 @@ from django.shortcuts import render
 from .models import Employee
 
 from django.views.generic import DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def index(request):
@@ -23,10 +24,10 @@ def detail(request, pk):
 
 class EmployeeListViews(ListView):
     model = Employee
-    template_name = 'employees/list.html'
+    template_name = 'employees/employee_list.html' # 'employees/list.html'
     context_object_name = 'employees'
 
-class EmployeeDetailViews(DetailView):
+class EmployeeDetailViews(LoginRequiredMixin, DetailView):
     model = Employee
-    template_name = 'employees/details.html'
+    template_name = 'employees/employee_details.html' # 'employees/details.html'
     context_object_name = 'emp'

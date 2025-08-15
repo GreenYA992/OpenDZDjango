@@ -77,7 +77,7 @@ ROOT_URLCONF = "django_project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'], # указываем что шаблоны есть еще и на уровне проекта
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

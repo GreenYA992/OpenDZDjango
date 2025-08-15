@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Подробная информация о сотруднике</h1>
+    <div>
+        <p><strong>Username:</strong> {{ emp.username }}</p>
+        <p><strong>Имя:</strong> {{ emp.first_name }}</p>
+        <p><strong>Фамилия:</strong> {{ emp.last_name }}</p>
+        <p><strong>Пол:</strong> {{emp.gender}}</p>
+    </div>
+    <a href="{% url 'employees:list' %}">Назад к списку</a>
+    <!-- app_name:name='list' (из employees/urls) -->
+{% endblock %}
