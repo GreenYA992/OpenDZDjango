@@ -20,14 +20,16 @@ from django.contrib import admin
 from django.urls import include, path
 
 # noinspection PyUnresolvedReferences
-from employees import views as employees_views
+#from employees import views as employees_views
 
 # noinspection PyUnresolvedReferences
 from workplaces import views as workplaces_views
 
 urlpatterns = [
+    #path('', views.index)
     path("admin/", admin.site.urls),
     path("__debug__/", include(debug_toolbar.urls)),
-    path("employees/", employees_views.index),
+
+    path('employees/', include('employees.urls')),
     path("workplaces/", workplaces_views.index),
 ]

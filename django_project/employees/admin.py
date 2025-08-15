@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-# noinspection PyUnresolvedReferences
+
 from .models import Employee, EmployeeSkill
 # noinspection PyUnresolvedReferences
 from import_export import resources

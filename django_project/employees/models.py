@@ -20,7 +20,7 @@ class Employee(AbstractUser):
         verbose_name="Группы",
         blank=True,
         related_name="employee_groups",  # чтобы избежать конфликтов
-        related_query_name="employee",
+        related_query_name="employees",
     )
     """
 

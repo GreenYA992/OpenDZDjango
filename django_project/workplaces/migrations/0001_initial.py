@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "employee",
+                    "employees",
                     models.OneToOneField(
                         blank=True,
                         null=True,

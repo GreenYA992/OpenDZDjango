@@ -183,7 +183,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "employee",
+                    "employees",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="skills",
@@ -201,7 +201,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "unique_together": {("employee", "skill")},
+                "unique_together": {("employees", "skill")},
             },
         ),
     ]

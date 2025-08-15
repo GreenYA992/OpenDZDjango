@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenYA.com</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body>
+    <h1>Подробная информация о сотруднике</h1>
+    <div>
+        <p><strong>Username:</strong> {{ emp.username }}</p>
+        <p><strong>Имя:</strong> {{ emp.first_name }}</p>
+        <p><strong>Фамилия:</strong> {{ emp.last_name }}</p>
+        <p><strong>Пол:</strong> {{emp.gender}}</p>
+    </div>
+    <a href="{% url 'employees:list' %}">Назад к списку</a>
+</body>
+</html>

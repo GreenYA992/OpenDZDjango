@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="employee",
+            name="employees",
             options={"verbose_name": "Сотрудник", "verbose_name_plural": "Сотрудники"},
         ),
         migrations.AlterModelOptions(
@@ -26,14 +26,14 @@ class Migration(migrations.Migration):
             options={"verbose_name": "Навык", "verbose_name_plural": "Навыки"},
         ),
         migrations.AlterField(
-            model_name="employee",
+            model_name="employees",
             name="first_name",
             field=models.CharField(
                 blank=True, max_length=150, verbose_name="first name"
             ),
         ),
         migrations.AlterField(
-            model_name="employee",
+            model_name="employees",
             name="last_name",
             field=models.CharField(
                 blank=True, max_length=150, verbose_name="last name"
