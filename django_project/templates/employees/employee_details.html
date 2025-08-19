@@ -43,6 +43,18 @@
             <p><strong>Имя:</strong> {{ emp.first_name }}</p>
             <p><strong>Фамилия:</strong> {{ emp.last_name }}</p>
             <p><strong>Пол:</strong> {{emp.gender}}</p>
+            <!-- Навыки -->
+            {% if emp.skills.all %}
+                <p><strong>Навыки:</strong></p>
+                    <ul class="skills-list">
+                        {% for skill in emp.skills.all %}
+                            <li>{{ skill.get_skill_display }} (уровень {{ skill.level }}/10)</li>
+                        {% endfor %}
+                    </ul>
+            {% else %}
+                <p><strong>Навыки:</strong> Нет добавленных навыков</p>
+            {% endif %}
+            <!-- Описание -->
             {% if emp.description %}
                 <p><strong>Описание:</strong> {{ emp.description }}</p>
             {% endif %}
