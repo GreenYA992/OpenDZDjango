@@ -5,12 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Система сотрудников{% endblock %}</title>
 
+        <!-- Базовые стили -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
         <!-- Блок для дополнительных стилей -->
         {% block extra_css %}{% endblock %}
     </head>
     <body>
         <header>
-            <p>Шапка</p>
+            <p>🏢 Система управления сотрудниками</p>
         </header>
         <main>
             {% block content %}
@@ -18,7 +22,7 @@
             {% endblock %}
         </main>
         <footer>
-            <p>Подвал</p>
+            <p>© 2025 Система управления сотрудниками.</p>
         </footer>
     </body>
 </html>

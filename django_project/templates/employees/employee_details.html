@@ -2,20 +2,21 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/employee_details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/employee/employee_details.css' %}">
 {% endblock %}
 
 {% block content %}
     <h1>Подробная информация о сотруднике</h1>
+
     <div>
-        {% if emp.images.all %}
+        {% if images %}
             <h2>Галерея изображений</h2>
             <div class="gallery-container">
-                {% for image in emp.images.all %}
+                {% for image in images %}
                     <div class="gallery-item">
-                        <img src="{{ image.cover.url }}"
+                        <img src="{{ image.image.url }}"
                              alt="Изображение сотрудника {{ emp.username }}" />
-                             <p class="image-order">Порядковый номер: {{ image.order }}</p>
+                             <p class="image-order">Изображение номер: {{ image.order }}</p>
                              <small class="image-date">Добавлено:
                                  {{ image.created_at|date:"d.m.Y H:i" }}</small>
                     </div>
@@ -24,6 +25,17 @@
         {% else %}
             <p class="no-images">Нет изображений в галерее</p>
         {% endif %}
+
+        <!-- Кнопки для сортировки -->
+        <div class="sort-buttons">
+            <a href="?sort=asc" class="btn {% if current_sort == 'asc' %}active{% endif %}">
+                Сначала старые
+            </a>
+            <a href="?sort=desc" class="btn {% if current_sort == 'desc' %}active{% endif %}">
+                Сначала новые
+            </a>
+        </div>
+
 
         <div class="employee-info">
             <p><strong>Username:</strong> {{ emp.username }}</p>
@@ -36,6 +48,9 @@
             {% endif %}
         </div>
     </div>
-    <a href="{% url 'employees:list' %}">Назад к списку</a>
+
+    <div class="sort-buttons">
+        <a href="{% url 'employees:list' %}" class="btn back-btn">Назад к списку</a>
+    </div>
     <!-- app_name:name='list' (из employees/urls) -->
 {% endblock %}
