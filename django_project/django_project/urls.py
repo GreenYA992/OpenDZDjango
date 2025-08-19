@@ -19,8 +19,8 @@ import debug_toolbar
 from django.contrib import admin
 from django.urls import include, path
 
-# noinspection PyUnresolvedReferences
-#from employees import views as employees_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 # noinspection PyUnresolvedReferences
 from workplaces import views as workplaces_views
@@ -33,3 +33,5 @@ urlpatterns = [
     path('employees/', include('employees.urls')),
     path("workplaces/", workplaces_views.index),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

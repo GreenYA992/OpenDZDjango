@@ -2,6 +2,9 @@
 {% block content %}
     <h1>Подробная информация о сотруднике</h1>
     <div>
+        {% if emp.cover %}
+            <img src="{{ emp.cover.url }}" />
+        {% endif %}
         <p><strong>Username:</strong> {{ emp.username }}</p>
         <p><strong>Имя:</strong> {{ emp.first_name }}</p>
         <p><strong>Фамилия:</strong> {{ emp.last_name }}</p>

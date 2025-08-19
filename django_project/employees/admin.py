@@ -29,6 +29,7 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
         "gender",
         "show_skills",
         'is_staff',
+        'cover',
     )
     list_display_links = ('username', 'email') # Кликабельные объекты
     list_editable = ("last_name", "first_name", "middle_name")
@@ -47,7 +48,7 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
         (None, {"fields": ("username", "password")}),
         (
             "Персональная информация",
-            {"fields": ("email", "first_name", "last_name", "middle_name", "gender")},
+            {"fields": ("email", "first_name", "last_name", "middle_name", "gender", 'cover')},
         ),
         (
             "Права",

@@ -13,6 +13,7 @@ class Employee(AbstractUser):
     middle_name = models.CharField(max_length=100, blank=True, verbose_name="Отчество")
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name="Пол")
     description = models.TextField(blank=True, verbose_name="Описание")
+    cover = models.ImageField(upload_to='covers/', blank=True)
 
     """
     groups = models.ManyToManyField(
