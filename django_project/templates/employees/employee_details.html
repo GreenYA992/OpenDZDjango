@@ -1,14 +1,40 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/employee_details.css' %}">
+{% endblock %}
+
 {% block content %}
     <h1>Подробная информация о сотруднике</h1>
     <div>
-        {% if emp.cover %}
-            <img src="{{ emp.cover.url }}" />
+        {% if emp.images.all %}
+            <h2>Галерея изображений</h2>
+            <div class="gallery-container">
+                {% for image in emp.images.all %}
+                    <div class="gallery-item">
+                        <img src="{{ image.cover.url }}"
+                             alt="Изображение сотрудника {{ emp.username }}" />
+                             <p class="image-order">Порядковый номер: {{ image.order }}</p>
+                             <small class="image-date">Добавлено:
+                                 {{ image.created_at|date:"d.m.Y H:i" }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-images">Нет изображений в галерее</p>
         {% endif %}
-        <p><strong>Username:</strong> {{ emp.username }}</p>
-        <p><strong>Имя:</strong> {{ emp.first_name }}</p>
-        <p><strong>Фамилия:</strong> {{ emp.last_name }}</p>
-        <p><strong>Пол:</strong> {{emp.gender}}</p>
+
+        <div class="employee-info">
+            <p><strong>Username:</strong> {{ emp.username }}</p>
+            <p><strong>Email:</strong> {{ emp.email }}</p>
+            <p><strong>Имя:</strong> {{ emp.first_name }}</p>
+            <p><strong>Фамилия:</strong> {{ emp.last_name }}</p>
+            <p><strong>Пол:</strong> {{emp.gender}}</p>
+            {% if emp.description %}
+                <p><strong>Описание:</strong> {{ emp.description }}</p>
+            {% endif %}
+        </div>
     </div>
     <a href="{% url 'employees:list' %}">Назад к списку</a>
     <!-- app_name:name='list' (из employees/urls) -->

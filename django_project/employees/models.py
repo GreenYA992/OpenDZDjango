@@ -13,7 +13,7 @@ class Employee(AbstractUser):
     middle_name = models.CharField(max_length=100, blank=True, verbose_name="Отчество")
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name="Пол")
     description = models.TextField(blank=True, verbose_name="Описание")
-    cover = models.ImageField(upload_to='covers/', blank=True)
+    #cover = models.ImageField(upload_to='covers/', blank=True, verbose_name="Галерея")
 
     """
     groups = models.ManyToManyField(
@@ -72,3 +72,44 @@ class EmployeeSkill(models.Model):
     def __str__(self):
         # noinspection PyUnresolvedReferences
         return f"{self.employee} - {self.get_skill_display()} (уровень {self.level})"
+
+class EmployeeImage(models.Model):
+    employee = models.ForeignKey(
+        Employee,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="Сотрудник",
+    )
+
+    image = models.ImageField(
+        upload_to='covers/',
+        blank=True,
+        verbose_name="Изображение")
+
+    order = models.PositiveIntegerField(
+        default=None,
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(0)],
+        verbose_name="Порядковый номер",
+        help_text="Чем меньше число, тем выше в галерее"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if self.order is None:  # Если order не указан
+            # Находим максимальный order для этого сотрудника
+            max_order = EmployeeImage.objects.filter(
+                employee=self.employee
+            ).aggregate(models.Max('order'))['order__max'] or 0
+            self.order = max_order + 1
+        super().save(*args, **kwargs)
+
+    class Meta:
+        unique_together = ("employee", "order")
+        ordering = ('order', 'created_at')
+        verbose_name = "файл сотрудника"
+        verbose_name_plural = "файлы сотрудников"
+
+    def __str__(self):
+        return f"Изображение {self.order} для {self.employee}"

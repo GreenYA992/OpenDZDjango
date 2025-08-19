@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 
-from .models import Employee, EmployeeSkill
+from .models import Employee, EmployeeSkill, EmployeeImage
 # noinspection PyUnresolvedReferences
 from import_export import resources
 # noinspection PyUnresolvedReferences
@@ -15,6 +15,19 @@ class EmployeesResource(resources.ModelResource):
 class EmployeeSkillInline(admin.TabularInline):
     model = EmployeeSkill
     extra = 0
+
+class EmployeeImageInline(admin.TabularInline):  # или admin.StackedInline
+    model = EmployeeImage
+    extra = 0  # Количество пустых форм для добавления
+    fields = ['image', 'order', 'created_at']
+    readonly_fields = ['created_at']
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        # Скрываем поле order при добавлении - оно назначится автоматически
+        formset.form.base_fields['order'].widget.attrs['style'] = 'display: none'
+        formset.form.base_fields['order'].label = ''
+        return formset
 
 @admin.register(Employee)
 class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
@@ -29,7 +42,7 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
         "gender",
         "show_skills",
         'is_staff',
-        'cover',
+        #'cover',
     )
     list_display_links = ('username', 'email') # Кликабельные объекты
     list_editable = ("last_name", "first_name", "middle_name")
@@ -48,7 +61,7 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
         (None, {"fields": ("username", "password")}),
         (
             "Персональная информация",
-            {"fields": ("email", "first_name", "last_name", "middle_name", "gender", 'cover')},
+            {"fields": ("email", "first_name", "last_name", "middle_name", "gender")},
         ),
         (
             "Права",
@@ -76,7 +89,7 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
         ),
     )
     # Навыки, если выбрать сотрудника
-    inlines = [EmployeeSkillInline]
+    inlines = [EmployeeSkillInline, EmployeeImageInline]
 
     def show_skills(self, obj):
         skills = obj.skills.all()

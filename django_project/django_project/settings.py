@@ -43,7 +43,6 @@ EXPORT_FORMATS = [CSV, XLSX, JSON]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
-
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -52,6 +51,7 @@ INSTALLED_APPS = [
     # debug_toolbar обязательно ниже, чем 'django.contrib.staticfiles'
     "debug_toolbar",
     "import_export",
+    "django_cleanup.apps.CleanupConfig",
 
     # Модули (Приложения)
     "employees",
