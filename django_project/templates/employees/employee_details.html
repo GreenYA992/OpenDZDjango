@@ -22,7 +22,7 @@
                 <p class="no-images">Нет главного фото</p>
             {% endif %}
         </div>
-
+        <!-- Инфо -->
         <div class="employee-info">
             <p><strong>Username:</strong> {{ emp.username }}</p>
             <p><strong>Email:</strong> {{ emp.email }}</p>
@@ -53,9 +53,37 @@
                     <div class="gallery-item">
                         <img src="{{ image.image.url }}"
                              alt="Изображение сотрудника {{ emp.username }}" />
-                             <p class="image-order">Изображение номер: {{ image.order }}</p>
-                             <small class="image-date">Добавлено:
-                                 {{ image.created_at|date:"d.m.Y H:i" }}</small>
+                        <div class="image-info">
+                            <p class="image-order">Изображение номер: {{ image.order }}</p>
+                            {% if image.is_main %}
+                                <span class="main-badge">★ Главное</span>
+                            {% endif %}
+                            <small class="image-date">Добавлено:
+                                {{ image.created_at|date:"d.m.Y H:i" }}</small>
+                        </div>
+
+                        <!-- Формы управления для каждого фото -->
+                        <div class="image-actions">
+                            {% if not image.is_main %}
+                            <form method="post" action="{% url 'employees:set_main_photo' emp.pk %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="image_pk" value="{{ image.pk }}">
+                                <button type="submit" class="btn btn-sm btn-outline">
+                                    Сделать главным
+                                </button>
+                            </form>
+                            {% endif %}
+
+                            <form method="post" action="{% url 'employees:delete_image' emp.pk %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="image_pk" value="{{ image.pk }}">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Удалить изображение?')">
+                                    Удалить
+                                </button>
+                            </form>
+                        </div>
+
+
                     </div>
                 {% endfor %}
             </div>
