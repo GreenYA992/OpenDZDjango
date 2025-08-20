@@ -40,7 +40,7 @@
                             </span>
                         </td>
                         <td>
-                            <a href="{% url 'employees:detail' employee.id %}" class="btn-details">
+                            <a href="{% url 'employees:detail' employee.id %}" class="btn btn-primary btn-details">
                                 <i class="fas fa-eye"></i> Подробнее
                             </a>
                         </td>
@@ -59,31 +59,49 @@
     <div class="cards-section">
         <h2>Карточный вид</h2>
         <div class="employees-grid">
-            {% for employee in employees %}
+            {% for data in employees_data %}
             <div class="employee-card">
+                <div class="gallery-container">
+                    {% if data.main_photo %}
+                    <div class="gallery-item">
+                        <p class="image-order">Главное фото</p>
+                        <img src="{{ data.main_photo.image.url }}"
+                             alt="Главное фото {{ data.emp.username }}"
+                             class="avatar" />
+                    </div>
+                    {% else %}
+                    <div class="gallery-item">
+                        <p class="image-order">Главное фото</p>
+                        <img src="{% static 'img/noimage.jpg' %}"
+                             alt="Фото отсутствует"
+                             class="avatar" />
+                    </div>
+                    {% endif %}
+                </div>
+
                 <div class="card-header">
-                    <span class="employee-id">#{{ employee.id }}</span>
-                    <span class="gender-badge {% if employee.gender == 'M' %}male{% else %}female{% endif %}">
-                        {{ employee.get_gender_display }}
+                    <span class="employee-id">#{{ data.emp.id }}</span>
+                    <span class="gender-badge {% if data.emp.gender == 'M' %}male{% else %}female{% endif %}">
+                        {{ data.emp.get_gender_display }}
                     </span>
                 </div>
 
                 <div class="card-body">
                     <h3 class="employee-name">
-                        {{ employee.last_name }} {{ employee.first_name }}
+                        {{ data.emp.last_name }} {{ data.emp.first_name }}
                     </h3>
                     <p class="employee-username">
-                        <i class="fas fa-user"></i> {{ employee.username }}
+                        <i class="fas fa-user"></i> {{ data.emp.username }}
                     </p>
-                    {% if employee.email %}
+                    {% if data.emp.email %}
                     <p class="employee-email">
-                        <i class="fas fa-envelope"></i> {{ employee.email }}
+                        <i class="fas fa-envelope"></i> {{ data.emp.email }}
                     </p>
                     {% endif %}
                 </div>
 
                 <div class="card-footer">
-                    <a href="{% url 'employees:detail' employee.id %}" class="btn-card-details">
+                    <a href="{% url 'employees:detail' data.emp.id %}" class="btn btn-primary btn-card-details">
                         <i class="fas fa-arrow-right"></i> Подробнее
                     </a>
                 </div>
@@ -98,7 +116,7 @@
     </div>
 
     <div class="navigation-buttons">
-        <a href="/" class="btn back-btn">
+        <a href="/" class="btn btn-secondary back-btn">
             <i class="fas fa-home"></i> На главную
         </a>
     </div>

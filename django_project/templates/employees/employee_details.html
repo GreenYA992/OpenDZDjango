@@ -19,7 +19,12 @@
                          class="avatar" />
             </div>
             {% else %}
-                <p class="no-images">Нет главного фото</p>
+            <div class="gallery-item">
+                <p class="image-order">Главное фото</p>
+                <img src="{% static 'img/noimage.jpg' %}"
+                     alt="Фото отсутствует"
+                     class="avatar" />
+            </div>
             {% endif %}
         </div>
         <!-- Инфо -->

@@ -10,6 +10,28 @@ class EmployeeListViews(ListView):
     model = Employee
     template_name = "employees/employee_list.html"  # 'employees/list.html'
     context_object_name = "employees"
+    paginate_by = 10
+
+    #def get_queryset(self):
+        #return Employee.objects.all().order_by('id')
+    def get_queryset(self):
+        # Используем prefetch_related для оптимизации запросов
+        return super().get_queryset().prefetch_related('images')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Для каждого сотрудника находим основное фото
+        employees_data = []
+        for employee in context['employees']:
+            main_photo = employee.images.filter(is_main=True).first()
+            employees_data.append({
+                'emp': employee,  # объект сотрудника
+                'main_photo': main_photo  # основное фото или None
+            })
+
+        context['employees_data'] = employees_data
+        return context
 
 
 class EmployeeDetailViews(LoginRequiredMixin, DetailView):
