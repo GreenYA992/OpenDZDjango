@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView, ListView
 
@@ -19,17 +18,24 @@ class EmployeeDetailViews(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        employee = self.object
+        emp = self.object
+        main_photo = emp.images.filter(is_main=True).first()
 
         # Получаем параметр сортировки
         sort_order = self.request.GET.get("sort", "asc")
 
         # Сортируем изображения
         if sort_order == "desc":
-            images = employee.images.all().order_by("-order")
+            images = emp.images.all().order_by("-order")
         else:
-            images = employee.images.all().order_by("order")
+            images = emp.images.all().order_by("order")
 
-        context["images"] = images
-        context["current_sort"] = sort_order
+        context = {
+            'emp': emp,
+            'images': images,
+            "current_sort": sort_order,
+            'main_photo': main_photo,
+        }
+        #context["images"] = images
+        #context["current_sort"] = sort_order
         return context

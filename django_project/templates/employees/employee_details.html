@@ -9,6 +9,43 @@
     <h1>Подробная информация о сотруднике</h1>
 
     <div>
+        <!-- Главное фото (аватар) -->
+        <div class="gallery-container">
+            {% if main_photo %}
+            <div class="gallery-item">
+                <p class="image-order">Главное фото</p>
+                    <img src="{{ main_photo.image.url }}"
+                         alt="Главное фото {{ emp.username }}"
+                         class="avatar" />
+            </div>
+            {% else %}
+                <p class="no-images">Нет главного фото</p>
+            {% endif %}
+        </div>
+
+        <div class="employee-info">
+            <p><strong>Username:</strong> {{ emp.username }}</p>
+            <p><strong>Email:</strong> {{ emp.email }}</p>
+            <p><strong>Имя:</strong> {{ emp.first_name }}</p>
+            <p><strong>Фамилия:</strong> {{ emp.last_name }}</p>
+            <p><strong>Пол:</strong> {{emp.gender}}</p>
+            <!-- Навыки -->
+            {% if emp.skills.all %}
+                <p><strong>Навыки:</strong></p>
+                    <ul class="skills-list">
+                        {% for skill in emp.skills.all %}
+                            <li>{{ skill.get_skill_display }} (уровень {{ skill.level }}/10)</li>
+                        {% endfor %}
+                    </ul>
+            {% else %}
+                <p><strong>Навыки:</strong> Нет добавленных навыков</p>
+            {% endif %}
+            <!-- Описание -->
+            {% if emp.description %}
+                <p><strong>Описание:</strong> {{ emp.description }}</p>
+            {% endif %}
+        </div>
+
         {% if images %}
             <h2>Галерея изображений</h2>
             <div class="gallery-container">
@@ -34,30 +71,6 @@
             <a href="?sort=desc" class="btn {% if current_sort == 'desc' %}active{% endif %}">
                 Сначала новые
             </a>
-        </div>
-
-
-        <div class="employee-info">
-            <p><strong>Username:</strong> {{ emp.username }}</p>
-            <p><strong>Email:</strong> {{ emp.email }}</p>
-            <p><strong>Имя:</strong> {{ emp.first_name }}</p>
-            <p><strong>Фамилия:</strong> {{ emp.last_name }}</p>
-            <p><strong>Пол:</strong> {{emp.gender}}</p>
-            <!-- Навыки -->
-            {% if emp.skills.all %}
-                <p><strong>Навыки:</strong></p>
-                    <ul class="skills-list">
-                        {% for skill in emp.skills.all %}
-                            <li>{{ skill.get_skill_display }} (уровень {{ skill.level }}/10)</li>
-                        {% endfor %}
-                    </ul>
-            {% else %}
-                <p><strong>Навыки:</strong> Нет добавленных навыков</p>
-            {% endif %}
-            <!-- Описание -->
-            {% if emp.description %}
-                <p><strong>Описание:</strong> {{ emp.description }}</p>
-            {% endif %}
         </div>
     </div>
 

@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from import_export import resources
 # noinspection PyUnresolvedReferences
 from import_export.admin import ImportExportModelAdmin
+from django.utils.safestring import mark_safe
 
 from .models import Employee, EmployeeImage, EmployeeSkill
 
@@ -21,8 +22,8 @@ class EmployeeSkillInline(admin.TabularInline):
 class EmployeeImageInline(admin.TabularInline):  # или admin.StackedInline
     model = EmployeeImage
     extra = 0  # Количество пустых форм для добавления
-    fields = ["image", "order", "created_at"]
-    readonly_fields = ["created_at"]
+    fields = ['image_preview', "image", "is_main", "order", "created_at"]
+    readonly_fields = ['image_preview', "created_at"]
 
     def get_formset(self, request, obj=None, **kwargs):
         formset = super().get_formset(request, obj, **kwargs)
@@ -30,6 +31,13 @@ class EmployeeImageInline(admin.TabularInline):  # или admin.StackedInline
         formset.form.base_fields["order"].widget.attrs["style"] = "display: none"
         formset.form.base_fields["order"].label = ""
         return formset
+
+    def image_preview(self, obj):
+        if obj.image:
+            return mark_safe(f'<img src="{obj.image.url}" style="max-height: 75px; max-width: 75px;" />')
+        return "Нет изображения"
+
+    image_preview.short_description = "Превью"
 
 
 @admin.register(Employee)

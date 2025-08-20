@@ -24,7 +24,7 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.gallery-item img {
+.gallery-container .gallery-item img {
     max-width: 200px;
     max-height: 200px;
     border-radius: 4px;
@@ -75,4 +75,16 @@
     background: #0056b3;
     text-decoration: none;
     color: white;
+}
+
+/* Стили для главного фото */
+.employee-header .main-photo .avatar {
+    width: 200px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 10px !important;
+    border: 3px solid #007bff !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+    max-width: none !important;
+    max-height: none !important;
 }
