@@ -8,12 +8,20 @@ class Employee(AbstractUser):
         ("M", "Мужской"),
         ("F", "Женский"),
     ]
-    email = models.EmailField(unique=True, verbose_name="Email", blank=False,)
-    username = models.CharField(max_length=150, unique=True, verbose_name="Логин",)
+    email = models.EmailField(
+        unique=True,
+        verbose_name="Email",
+        blank=False,
+    )
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        verbose_name="Логин",
+    )
     middle_name = models.CharField(max_length=100, blank=True, verbose_name="Отчество")
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name="Пол")
     description = models.TextField(blank=True, verbose_name="Описание")
-    #cover = models.ImageField(upload_to='covers/', blank=True, verbose_name="Галерея")
+    # cover = models.ImageField(upload_to='covers/', blank=True, verbose_name="Галерея")
 
     """
     groups = models.ManyToManyField(
@@ -28,7 +36,7 @@ class Employee(AbstractUser):
     class Meta:
         verbose_name = "Сотрудник"
         verbose_name_plural = "Сотрудники"
-        #app_label = 'auth'
+        # app_label = 'auth'
 
     def save(self, *args, **kwargs):
         # Приводим email к нижнему регистру перед сохранением
@@ -73,6 +81,7 @@ class EmployeeSkill(models.Model):
         # noinspection PyUnresolvedReferences
         return f"{self.employee} - {self.get_skill_display()} (уровень {self.level})"
 
+
 class EmployeeImage(models.Model):
     employee = models.ForeignKey(
         Employee,
@@ -82,9 +91,8 @@ class EmployeeImage(models.Model):
     )
 
     image = models.ImageField(
-        upload_to='covers/',
-        blank=True,
-        verbose_name="Изображение")
+        upload_to="covers/", blank=True, verbose_name="Изображение"
+    )
 
     order = models.PositiveIntegerField(
         default=None,
@@ -92,24 +100,44 @@ class EmployeeImage(models.Model):
         blank=True,
         validators=[MinValueValidator(0)],
         verbose_name="Порядковый номер",
-        help_text="Чем меньше число, тем выше в галерее"
+        help_text="Чем меньше число, тем выше в галерее",
     )
+
+    is_main = models.BooleanField(
+        default=False,
+        verbose_name="Главное фото",
+        help_text="Использовать как главное фото сотрудника сотрудника"
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         if self.order is None:  # Если order не указан
             # Находим максимальный order для этого сотрудника
-            max_order = EmployeeImage.objects.filter(
-                employee=self.employee
-            ).aggregate(models.Max('order'))['order__max'] or 0
+            max_order = (
+                EmployeeImage.objects.filter(employee=self.employee).aggregate(
+                    models.Max("order")
+                )["order__max"]
+                or 0
+            )
             self.order = max_order + 1
+        super().save(*args, **kwargs)
+
+        # Если это фото становится главным, снимаем флаг с других фото
+        if self.is_main:
+            EmployeeImage.objects.filter(
+                employee=self.employee,
+                is_main=True
+            ).exclude(pk=self.pk).update(is_main=False)
+
         super().save(*args, **kwargs)
 
     class Meta:
         unique_together = ("employee", "order")
-        ordering = ('order', 'created_at')
+        ordering = ("order", "created_at")
         verbose_name = "файл сотрудника"
         verbose_name_plural = "файлы сотрудников"
 
     def __str__(self):
-        return f"Изображение {self.order} для {self.employee}"
+        status = " (Главное)" if self.is_main else ""
+        return f"Изображение {self.order} для {self.employee}{status}"

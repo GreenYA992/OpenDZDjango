@@ -34,7 +34,8 @@ INTERNAL_IPS = [
 ]
 
 # noinspection PyUnresolvedReferences
-from import_export.formats.base_formats import CSV, XLSX, JSON
+from import_export.formats.base_formats import CSV, JSON, XLSX
+
 IMPORT_FORMATS = [CSV, XLSX]
 EXPORT_FORMATS = [CSV, XLSX, JSON]
 
@@ -52,14 +53,13 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "import_export",
     "django_cleanup.apps.CleanupConfig",
-
     # Модули (Приложения)
     "employees",
     "workplaces",
 ]
 
 AUTH_USER_MODEL = "employees.Employee"
-#AUTH_USER_MODEL = 'auth.Employee'
+# AUTH_USER_MODEL = 'auth.Employee'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -77,7 +77,9 @@ ROOT_URLCONF = "django_project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'], # указываем что шаблоны есть еще и на уровне проекта
+        "DIRS": [
+            BASE_DIR / "templates"
+        ],  # указываем что шаблоны есть еще и на уровне проекта
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -139,12 +141,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static_dev'
-]
+STATICFILES_DIRS = [BASE_DIR / "static_dev"]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

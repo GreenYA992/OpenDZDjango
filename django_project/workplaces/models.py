@@ -1,5 +1,4 @@
 from django.db import models
-
 # noinspection PyUnresolvedReferences
 from employees.models import Employee
 

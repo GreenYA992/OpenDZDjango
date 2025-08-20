@@ -16,22 +16,19 @@ Including another URLconf
 """
 
 import debug_toolbar
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
-
-from django.conf import settings
-from django.conf.urls.static import static
-
 # noinspection PyUnresolvedReferences
 from workplaces import views as workplaces_views
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path("", TemplateView.as_view(template_name="home.html"), name="home"),
     path("admin/", admin.site.urls),
     path("__debug__/", include(debug_toolbar.urls)),
-
-    path('employees/', include('employees.urls')),
+    path("employees/", include("employees.urls")),
     path("workplaces/", workplaces_views.index),
 ]
 if settings.DEBUG:

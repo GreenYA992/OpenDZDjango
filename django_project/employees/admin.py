@@ -1,38 +1,41 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-
-
-from .models import Employee, EmployeeSkill, EmployeeImage
 # noinspection PyUnresolvedReferences
 from import_export import resources
 # noinspection PyUnresolvedReferences
 from import_export.admin import ImportExportModelAdmin
 
+from .models import Employee, EmployeeImage, EmployeeSkill
+
+
 class EmployeesResource(resources.ModelResource):
     class Meta:
         model = Employee
+
 
 class EmployeeSkillInline(admin.TabularInline):
     model = EmployeeSkill
     extra = 0
 
+
 class EmployeeImageInline(admin.TabularInline):  # или admin.StackedInline
     model = EmployeeImage
     extra = 0  # Количество пустых форм для добавления
-    fields = ['image', 'order', 'created_at']
-    readonly_fields = ['created_at']
+    fields = ["image", "order", "created_at"]
+    readonly_fields = ["created_at"]
 
     def get_formset(self, request, obj=None, **kwargs):
         formset = super().get_formset(request, obj, **kwargs)
-        # Скрываем поле order при добавлении - оно назначится автоматически
-        formset.form.base_fields['order'].widget.attrs['style'] = 'display: none'
-        formset.form.base_fields['order'].label = ''
+        # Скрываем поле order при добавлении - он заполнится автоматически
+        formset.form.base_fields["order"].widget.attrs["style"] = "display: none"
+        formset.form.base_fields["order"].label = ""
         return formset
+
 
 @admin.register(Employee)
 class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
     resource_class = EmployeesResource
-    #filter_horizontal = ('groups', 'user_permissions')
+    # filter_horizontal = ('groups', 'user_permissions')
     list_display = (
         "username",
         "email",
@@ -41,18 +44,17 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
         "middle_name",
         "gender",
         "show_skills",
-        'is_staff',
+        "is_staff",
         #'cover',
     )
-    list_display_links = ('username', 'email') # Кликабельные объекты
+    list_display_links = ("username", "email")  # Кликабельные объекты
     list_editable = ("last_name", "first_name", "middle_name")
     search_fields = (
-        "username__iexact", # Точный поиск (но нечувствительный к регистру)
-        "email__icontains", # Частичный поиск (чувствительный к регистру)
-        "last_name__iexact", # Точный поиск (но нечувствительный к регистру)
-        "first_name__iexact", # Точный поиск (но нечувствительный к регистру)
+        "username__iexact",  # Точный поиск (но нечувствительный к регистру)
+        "email__icontains",  # Частичный поиск (чувствительный к регистру)
+        "last_name__iexact",  # Точный поиск (но нечувствительный к регистру)
+        "first_name__iexact",  # Точный поиск (но нечувствительный к регистру)
         "skills__skill__iexact",  # Точный поиск (но нечувствительный к регистру)
-
     )
 
     list_filter = ["skills__skill", "gender", "is_active"]
@@ -102,15 +104,17 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
     show_skills.short_description = "Навыки"
 
     def get_search_results(self, request, queryset, search_term):
-        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        queryset, use_distinct = super().get_search_results(
+            request, queryset, search_term
+        )
 
         skill_map = {
-            'бэкенд': 'backend',
-            'фронтенд': 'frontend',
-            'тестирование': 'testing',
-            'Управление проектами' : 'management',
-            'Дизайн' : 'design',
-            'devops' : 'DevOps',
+            "бэкенд": "backend",
+            "фронтенд": "frontend",
+            "тестирование": "testing",
+            "Управление проектами": "management",
+            "Дизайн": "design",
+            "devops": "DevOps",
         }
         lower_search = search_term.lower().strip()
         if lower_search in skill_map:
@@ -121,15 +125,21 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
 
 @admin.register(EmployeeSkill)
 class EmployeeSkillAdmin(admin.ModelAdmin):
-    list_display = ('employee_info',
-                    'skill',
-                    'level',)
-    list_filter = ('skill',)
-    search_fields = ('employee__username', 'skill',)
+    list_display = (
+        "employee_info",
+        "skill",
+        "level",
+    )
+    list_filter = ("skill",)
+    search_fields = (
+        "employee__username",
+        "skill",
+    )
 
     def employee_info(self, obj):
         return f"{obj.employee.last_name} {obj.employee.first_name} ({obj.employee.username})"
 
     employee_info.short_description = "Сотрудник"
 
-#admin.site.register(Employee, EmployeeAdmin)
+
+# admin.site.register(Employee, EmployeeAdmin)
