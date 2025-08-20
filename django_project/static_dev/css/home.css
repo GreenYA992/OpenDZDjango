@@ -1,103 +1,69 @@
-/* Home page specific styles */
+/* home.css */
+/* Стили конкретно для главной страницы (home.html). Наследуем всё из base.css */
+
+/* Секция-герой под самым верхом */
 .hero {
     text-align: center;
-    padding: 3rem 0;
+    padding: 3rem 1rem;
     margin-bottom: 3rem;
+    background: linear-gradient(to right, rgba(52, 152, 219, 0.1), rgba(46, 204, 113, 0.1)); /* Очень светлый градиент */
+    border-radius: 10px;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
-    color: white;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    border-bottom: none; /* Убираем подчеркивание с h1 на главной */
 }
 
 .hero p {
-    font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: #7f8c8d;
 }
 
+/* Сетка для карточек фич (возможностей системы) */
 .features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Автоматическая responsive-сетка */
+    gap: 2rem; /* Расстояние между карточками */
+    margin-bottom: 3rem;
 }
 
+/* Стиль для каждой карточки фичи */
 .feature-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     padding: 2rem;
-    border-radius: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для карточки */
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease; /* Плавное поднятие карточки */
 }
-
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px); /* Карточка немного поднимается при наведении */
 }
 
 .feature-card h3 {
-    color: #667eea;
+    color: #2c3e50;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
 }
 
-.feature-card p {
-    color: #666;
-    line-height: 1.6;
-}
-
+/* Секция с призывом к действию (Call To Action) */
 .cta-section {
     text-align: center;
-    padding: 3rem 0;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.cta-section h2 {
+    margin-bottom: 2rem;
+}
+
+/* Контейнер для кнопок в CTA */
 .cta-buttons {
     display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
-    flex-wrap: wrap;
-}
-
-.primary-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.secondary-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid white;
-    color: white;
-}
-
-.secondary-btn:hover {
-    background: white;
-    color: #667eea;
-}
-
-/* Animation */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.feature-card {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-.feature-card:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.feature-card:nth-child(3) {
-    animation-delay: 0.4s;
+    justify-content: center; /* Центрируем кнопки */
+    gap: 1rem; /* Отступ между кнопками */
+    flex-wrap: wrap; /* Если кнопкам тесно, они переносятся на новую строку */
 }
