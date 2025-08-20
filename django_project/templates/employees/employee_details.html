@@ -63,6 +63,23 @@
             <p class="no-images">Нет изображений в галерее</p>
         {% endif %}
 
+        <div class="add-image-section">
+            <h2>Добавить изображение</h2>
+            <form method="post"
+                  action="{% url 'employees:add_image' emp.pk %}"
+                  enctype="multipart/form-data"
+                  class="image-upload-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="file" name="image" accept="image/*" required>
+                    <label>
+                        <input type="checkbox" name="is_main"> Сделать главным фото
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Добавить изображение</button>
+            </form>
+        </div>
+
         <!-- Кнопки для сортировки -->
         <div class="sort-buttons">
             <a href="?sort=asc" class="btn {% if current_sort == 'asc' %}active{% endif %}">
