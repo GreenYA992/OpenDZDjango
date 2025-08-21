@@ -22,11 +22,11 @@ class EmployeeListViews(ListView):
         context = super().get_context_data(**kwargs)
 
         # Получаем текущую страницу
-        page = context['page_obj']
+        page_employees = context['page_obj']
 
         # Для каждого сотрудника находим основное фото
         employees_data = []
-        for employee in context['employees']:
+        for employee in page_employees:
             main_photo = employee.images.filter(is_main=True).first()
             employees_data.append({
                 'emp': employee,  # объект сотрудника

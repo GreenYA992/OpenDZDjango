@@ -1,26 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/employee/employee_list.css' %}">
-{% endblock %}
-
-{% block content %}
-<div class="employee-list-container">
-    <div class="page-header">
-        <h1>Список сотрудников</h1>
-        <p>Всего сотрудников: {{ employees|length }}</p>
-        <p>Страница {{ page_obj.number }} из {{ paginator.num_pages }}</p>
-    </div>
-
-    <!-- Пагинация сверху -->
-    {% if is_paginated %}
-    <div class="pagination-top">
-        {% include 'employees/pagination.html' %}
-    </div>
-    {% endif %}
-
-    <!-- Карточное представление -->
+<!-- Карточное представление -->
     <div class="cards-section">
         <h2>Карточный вид</h2>
         <div class="employees-grid">
@@ -79,23 +57,3 @@
             {% endfor %}
         </div>
     </div>
-
-    <!-- Пагинация снизу -->
-    {% if is_paginated %}
-    <div class="pagination-bottom">
-        {% include 'employees/pagination.html' %}
-    </div>
-    {% endif %}
-
-    <div class="navigation-buttons">
-        <a href="/" class="btn btn-secondary back-btn">
-            <i class="fas fa-home"></i> На главную
-        </a>
-    </div>
-
-</div>
-{% endblock %}
-
-{% block extra_js %}
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
-{% endblock %}

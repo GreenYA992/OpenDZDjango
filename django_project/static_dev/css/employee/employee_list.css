@@ -259,3 +259,44 @@
         height: 120px;
     }
 }
+
+/* Пагинация */
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pagination .step-links {
+    display: inline-block;
+}
+
+.pagination-link {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #007bff;
+    transition: all 0.3s;
+}
+
+.pagination-link:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.current-page {
+    padding: 8px 16px;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.pagination-top {
+    margin-bottom: 20px;
+}
+
+.pagination-bottom {
+    margin-top: 30px;
+}
