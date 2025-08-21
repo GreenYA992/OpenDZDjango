@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import DetailView, ListView
 from django.contrib import messages
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from .models import Employee, EmployeeImage
 
 
@@ -12,14 +14,15 @@ class EmployeeListViews(ListView):
     context_object_name = "employees"
     paginate_by = 10
 
-    #def get_queryset(self):
-        #return Employee.objects.all().order_by('id')
     def get_queryset(self):
         # Используем prefetch_related для оптимизации запросов
         return super().get_queryset().prefetch_related('images')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # Получаем текущую страницу
+        page = context['page_obj']
 
         # Для каждого сотрудника находим основное фото
         employees_data = []
@@ -36,7 +39,7 @@ class EmployeeListViews(ListView):
 
 class EmployeeDetailViews(LoginRequiredMixin, DetailView):
     model = Employee
-    template_name = "employees/employee_details.html"  # 'employees/details.html'
+    template_name = "employees/employee_details.html"
     context_object_name = "emp"
 
     @staticmethod
