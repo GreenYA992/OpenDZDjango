@@ -16,13 +16,15 @@ class EmployeeListViews(ListView):
 
     def get_queryset(self):
         # Используем prefetch_related для оптимизации запросов
-        return super().get_queryset().prefetch_related('images')
+        return Employee.objects.all().prefetch_related('images')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Получаем текущую страницу
-        page_employees = context['page_obj']
+        # Получаем общее количество сотрудников БЕЗ пагинации
+        total_count = Employee.objects.count()
+        # Берем только сотрудников с текущей страницы
+        page_employees = context['page_obj'].object_list
 
         # Для каждого сотрудника находим основное фото
         employees_data = []
@@ -33,7 +35,11 @@ class EmployeeListViews(ListView):
                 'main_photo': main_photo  # основное фото или None
             })
 
-        context['employees_data'] = employees_data
+        context.update({
+            'employees_data': employees_data,
+            'total_count': total_count,  # Добавляем общее количество
+            'current_page_count': len(page_employees)  # Количество на текущей странице
+        })
         return context
 
 

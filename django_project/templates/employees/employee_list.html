@@ -9,9 +9,21 @@
 <div class="employee-list-container">
     <div class="page-header">
         <h1>Список сотрудников</h1>
-        <p>Всего сотрудников: {{ employees|length }}</p>
+        <p>Всего сотрудников: {{ total_count }}</p>
+        <p>На странице: {{ current_page_count }}</p>
         <p>Страница {{ page_obj.number }} из {{ paginator.num_pages }}</p>
     </div>
+
+    <!-- Отладочная информация -->
+        <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; display: none;">  <!-- display: none чтобы скрыть в продакшене -->
+            <strong>Отладка:</strong><br>
+            Total count: {{ total_count }}<br>
+            Paginator count: {{ paginator.count }}<br>
+            Page objects: {{ page_obj|length }}<br>
+            Employees data: {{ employees_data|length }}<br>
+            Page number: {{ page_obj.number }}<br>
+            Total pages: {{ paginator.num_pages }}
+        </div>
 
     <!-- Пагинация сверху -->
     {% if is_paginated %}
