@@ -14,17 +14,6 @@
         <p>Страница {{ page_obj.number }} из {{ paginator.num_pages }}</p>
     </div>
 
-    <!-- Отладочная информация -->
-        <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; display: none;">  <!-- display: none чтобы скрыть в продакшене -->
-            <strong>Отладка:</strong><br>
-            Total count: {{ total_count }}<br>
-            Paginator count: {{ paginator.count }}<br>
-            Page objects: {{ page_obj|length }}<br>
-            Employees data: {{ employees_data|length }}<br>
-            Page number: {{ page_obj.number }}<br>
-            Total pages: {{ paginator.num_pages }}
-        </div>
-
     <!-- Пагинация сверху -->
     {% if is_paginated %}
     <div class="pagination-top">
@@ -75,6 +64,28 @@
                         <i class="fas fa-envelope"></i> {{ data.emp.email }}
                     </p>
                     {% endif %}
+
+
+                    <div class="employee-skills">
+                        <p class="skills-title"><strong>Навыки:</strong></p>
+                        {% if data.emp.skills.all %}
+                            <ul class="skills-list">
+                                {% for skill in data.emp.skills.all %}
+                                    <li class="skill-item">
+                                        <span class="skill-name">{{ skill.get_skill_display }}</span>
+                                        <span class="skill-level">(уровень {{ skill.level }}/10)</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="no-skills">Нет добавленных навыков</p>
+                        {% endif %}
+                    </div>
+                    <div class="employee-experience">
+                        <p><strong>Стаж:</strong> {{ data.emp.experience_full }} </p>
+                    </div>
+
+
                 </div>
 
                 <div class="card-footer">

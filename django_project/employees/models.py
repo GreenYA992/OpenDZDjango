@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser, Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils.timezone import now
+from dateutil.relativedelta import relativedelta
 
 
 class Employee(AbstractUser):
@@ -21,7 +23,6 @@ class Employee(AbstractUser):
     middle_name = models.CharField(max_length=100, blank=True, verbose_name="Отчество")
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name="Пол")
     description = models.TextField(blank=True, verbose_name="Описание")
-    # cover = models.ImageField(upload_to='covers/', blank=True, verbose_name="Галерея")
 
     """
     groups = models.ManyToManyField(
@@ -43,6 +44,14 @@ class Employee(AbstractUser):
         # noinspection PyUnresolvedReferences
         self.email = self.email.lower() if self.email else self.email
         super().save(*args, **kwargs)
+
+    @property
+    def experience_full(self):
+        """Полный стаж в годах, месяцах и днях от даты регистрации"""
+        delta = relativedelta(now().date(), self.date_joined.date())
+        if self.is_active:
+            return f"{delta.years} лет {delta.months} месяцев {delta.days} дней"
+        return "уволен"
 
     def __str__(self):
         return f"{self.last_name} {self.first_name}"

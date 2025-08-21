@@ -10,13 +10,13 @@ from .models import Employee, EmployeeImage
 
 class EmployeeListViews(ListView):
     model = Employee
-    template_name = "employees/employee_list.html"  # 'employees/list.html'
+    template_name = "employees/employee_list.html"
     context_object_name = "employees"
     paginate_by = 10
 
     def get_queryset(self):
         # Используем prefetch_related для оптимизации запросов
-        return Employee.objects.all().prefetch_related('images')
+        return Employee.objects.all().prefetch_related('images', 'skills')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -108,8 +108,6 @@ class EmployeeImageMixin:
 
         employee_image.save()
         return employee_image
-
-"""==============================================================================="""
 
 def add_employee_image(request, pk):
     """Добавляем фото"""
