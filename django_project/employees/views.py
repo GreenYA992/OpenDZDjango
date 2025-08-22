@@ -4,6 +4,9 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
 
+from django.utils.timezone import now
+from dateutil.relativedelta import relativedelta
+
 from .models import Employee, EmployeeImage
 
 
@@ -155,3 +158,42 @@ def delete_employee_image(request, pk):
         messages.success(request, "Изображение удалено")
 
     return redirect("employees:detail", pk=pk)
+
+
+
+
+
+# создаем контекст для домашней страницы
+def home_view(request):
+    # Получаем 4 последних сотрудника по дате приема
+    latest_employees = Employee.objects.select_related('workplace').prefetch_related('skills')[:4]
+
+    # Добавляем информацию о фото и стаже для каждого сотрудника
+    employees_data = []
+    for employee in latest_employees:
+        # Получаем главное фото
+        main_photo = EmployeeImage.objects.filter(
+            employee=employee,
+            is_main=True
+        ).first()
+
+        # Если нет главного, берем первое фото
+        if not main_photo:
+            main_photo = EmployeeImage.objects.filter(
+                employee=employee
+            ).first()
+
+        # Вычисляем стаж в днях
+        experience_days = (now().date() - employee.date_joined.date()).days
+
+        employees_data.append({
+            'employee': employee,
+            'main_photo': main_photo,
+            'experience_days': experience_days
+        })
+
+    context = {
+        'latest_employees': employees_data
+    }
+
+    return render(request, 'home.html', context)

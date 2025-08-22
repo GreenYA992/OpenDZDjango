@@ -23,9 +23,12 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 # noinspection PyUnresolvedReferences
 from workplaces import views as workplaces_views
+# noinspection PyUnresolvedReferences
+from employees.views import home_view
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    path('', home_view, name='home'),
+    #path("", TemplateView.as_view(template_name="home.html"), name="home"),
     path("admin/", admin.site.urls),
     path("__debug__/", include(debug_toolbar.urls)),
     path("employees/", include("employees.urls")),
