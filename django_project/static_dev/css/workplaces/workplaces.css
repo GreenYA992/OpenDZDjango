@@ -1,0 +1,307 @@
+/* Основные стили для приложения рабочих мест - наследуем от base.css */
+
+/* ===== ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ СТРАНИЦ WORKPLACES ===== */
+
+/* Главный контейнер для всего контента рабочих мест */
+.workplace-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Заголовок h1 на страницах рабочих мест */
+.workplace-container h1 {
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+}
+
+/* Стили для карточек (используются в списке и деталях) */
+.workplace-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ===== СТИЛИ ДЛЯ СПИСКА РАБОЧИХ МЕСТ (workplaces.html) ===== */
+
+/* Сетка для отображения карточек рабочих мест */
+.workplaces-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Отдельная карточка рабочего места в списке */
+.workplace-item {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.workplace-item:hover {
+    transform: translateY(-3px);
+}
+
+/* Заголовок карточки (номер стола) */
+.workplace-number {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Информация о сотруднике в карточке */
+.workplace-employee-info {
+    margin-bottom: 1rem;
+}
+
+.workplace-status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.status-free {
+    background-color: #27ae60;
+    color: white;
+}
+
+.status-occupied {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Блок с кнопками действий */
+.workplace-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Кнопки действий - маленький размер */
+.btn-workplace {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+/* ===== СТИЛИ ДЛЯ ДЕТАЛЬНОЙ СТРАНИЦЫ (workplace_detail.html) ===== */
+
+/* Основная информация о рабочем месте */
+.workplace-detail-info {
+    margin-bottom: 2rem;
+}
+
+.workplace-detail-info p {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+/* Секция с соседними столами */
+.neighbors-section {
+    margin-top: 2rem;
+}
+
+.neighbors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Карточка соседнего стола */
+.neighbor-card {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 1rem;
+    border-left: 4px solid #3498db;
+}
+
+.neighbor-card.developer {
+    border-left-color: #e74c3c; /* Красная рамка для разработчиков */
+}
+
+.neighbor-card.tester {
+    border-left-color: #f39c12; /* Оранжевая рамка для тестировщиков */
+}
+
+/* ===== СТИЛИ ДЛЯ ФОРМ (booking.html, add_workplace.html) ===== */
+
+/* Контейнер для форм */
+.workplace-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Группы полей формы */
+.form-group-workplace {
+    margin-bottom: 1.5rem;
+}
+
+.form-group-workplace label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.form-group-workplace input,
+.form-group-workplace select,
+.form-group-workplace textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group-workplace select {
+    background-color: white;
+}
+
+/* Кнопки формы */
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    margin-top: 2rem;
+}
+
+/* ===== СТИЛИ ДЛЯ СООБЩЕНИЙ (message.html) ===== */
+
+/* Контейнер для системных сообщений */
+.messages-container-workplace {
+    margin-bottom: 2rem;
+}
+
+/* Стили для алертов (наследуем от base, но можем переопределить) */
+.alert-workplace {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border-color: #ffc107;
+    color: #856404;
+}
+
+/* ===== СТИЛИ ДЛЯ СТРАНИЦ ПОДТВЕРЖДЕНИЯ (clear_workplace.html, delete_workplace.html) ===== */
+
+/* Контейнер для страниц подтверждения */
+.confirmation-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Предупреждающее сообщение */
+.alert-confirmation {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.alert-confirmation.danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* ===== АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ ===== */
+
+@media (max-width: 768px) {
+    .workplaces-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .workplace-item {
+        padding: 1rem;
+    }
+
+    .workplace-actions {
+        flex-direction: column;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .neighbors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .workplace-form-container,
+    .confirmation-container {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+}
+
+/* ===== ДОПОЛНИТЕЛЬНЫЕ УТИЛИТЫ ===== */
+
+/* Текст для свободных/занятых мест */
+.text-free {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.text-occupied {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Иконки в кнопках */
+.btn-with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Отступы для секций */
+.section-spacing {
+    margin-bottom: 2rem;
+}
+
+/* Выравнивание текста по центру */
+.text-center {
+    text-align: center;
+}
+
+/* ===== КЛАССЫ ДЛЯ ОТЛАДКИ (можно удалить в продакшене) ===== */
+.debug-border {
+    border: 1px solid red;
+}

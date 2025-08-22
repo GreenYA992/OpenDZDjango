@@ -1,9 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, render, redirect
-from django.views.generic import DetailView, ListView
 from django.contrib import messages
-
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import DetailView, ListView
 
 from .models import Employee, EmployeeImage
 
@@ -16,7 +15,7 @@ class EmployeeListViews(ListView):
 
     def get_queryset(self):
         # Используем prefetch_related для оптимизации запросов
-        return Employee.objects.all().prefetch_related('images', 'skills')
+        return Employee.objects.all().prefetch_related("images", "skills")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -24,22 +23,28 @@ class EmployeeListViews(ListView):
         # Получаем общее количество сотрудников БЕЗ пагинации
         total_count = Employee.objects.count()
         # Берем только сотрудников с текущей страницы
-        page_employees = context['page_obj'].object_list
+        page_employees = context["page_obj"].object_list
 
         # Для каждого сотрудника находим основное фото
         employees_data = []
         for employee in page_employees:
             main_photo = employee.images.filter(is_main=True).first()
-            employees_data.append({
-                'emp': employee,  # объект сотрудника
-                'main_photo': main_photo  # основное фото или None
-            })
+            employees_data.append(
+                {
+                    "emp": employee,  # объект сотрудника
+                    "main_photo": main_photo,  # основное фото или None
+                }
+            )
 
-        context.update({
-            'employees_data': employees_data,
-            'total_count': total_count,  # Добавляем общее количество
-            'current_page_count': len(page_employees)  # Количество на текущей странице
-        })
+        context.update(
+            {
+                "employees_data": employees_data,
+                "total_count": total_count,  # Добавляем общее количество
+                "current_page_count": len(
+                    page_employees
+                ),  # Количество на текущей странице
+            }
+        )
         return context
 
 
@@ -64,16 +69,20 @@ class EmployeeDetailViews(LoginRequiredMixin, DetailView):
         sort_order = self.request.GET.get("sort", "asc")
         images = self.get_sorted_images(emp, sort_order)
 
-        context.update({
-            'images': images,
-            "current_sort": sort_order,
-            'main_photo': main_photo,
-        })
+        context.update(
+            {
+                "images": images,
+                "current_sort": sort_order,
+                "main_photo": main_photo,
+            }
+        )
 
         return context
 
+
 class EmployeeImageMixin:
     """Миксин для работы с изображениями сотрудника"""
+
     @staticmethod
     def get_employee(pk):
         """Получение сотрудника"""
@@ -87,21 +96,16 @@ class EmployeeImageMixin:
     @staticmethod
     def set_main_photo(image, employee):
         """установка главного фото"""
-        EmployeeImage.objects.filter(
-            employee=employee,
-            is_main=True
-        ).update(is_main=False)
+        EmployeeImage.objects.filter(employee=employee, is_main=True).update(
+            is_main=False
+        )
         image.is_main = True
         image.save()
 
     @staticmethod
     def create_employee_image(employee, image_file, order=None, make_main=False):
         """Создание нового изображения"""
-        employee_image = EmployeeImage(
-            employee=employee,
-            image=image_file,
-            order=order
-        )
+        employee_image = EmployeeImage(employee=employee, image=image_file, order=order)
 
         if make_main:
             EmployeeImageMixin.set_main_photo(employee_image, employee)
@@ -109,42 +113,45 @@ class EmployeeImageMixin:
         employee_image.save()
         return employee_image
 
+
 def add_employee_image(request, pk):
     """Добавляем фото"""
-    if request.method == 'POST':
+    if request.method == "POST":
         employee = EmployeeImageMixin.get_employee(pk)
-        image_file = request.FILES.get('image')
-        order = request.POST.get('order')
-        make_main = request.POST.get('is_main') == 'on'
+        image_file = request.FILES.get("image")
+        order = request.POST.get("order")
+        make_main = request.POST.get("is_main") == "on"
 
         if image_file:
             EmployeeImageMixin.create_employee_image(
                 employee, image_file, order, make_main
             )
-            messages.success(request, 'Изображение успешно добавлено')
+            messages.success(request, "Изображение успешно добавлено")
         else:
-            messages.error(request, 'Выберите файл для загрузки')
+            messages.error(request, "Выберите файл для загрузки")
 
-    return redirect('employees:detail', pk=pk)
+    return redirect("employees:detail", pk=pk)
+
 
 def set_main_photo(request, pk):
     """Установка главного фото"""
-    if request.method == 'POST':
-        image_pk = request.POST.get('image_pk')
+    if request.method == "POST":
+        image_pk = request.POST.get("image_pk")
         employee = EmployeeImageMixin.get_employee(pk)
 
         image = EmployeeImageMixin.get_image(image_pk)
         EmployeeImageMixin.set_main_photo(image, employee)
-        messages.success(request, 'Главное фото обновлено')
+        messages.success(request, "Главное фото обновлено")
 
-    return redirect('employees:detail', pk=pk)
+    return redirect("employees:detail", pk=pk)
+
 
 def delete_employee_image(request, pk):
     """Удаление фото"""
-    if request.method == 'POST':
-        image_pk = request.POST.get('image_pk')
+    if request.method == "POST":
+        image_pk = request.POST.get("image_pk")
         image = EmployeeImageMixin.get_image(image_pk)
         image.delete()
-        messages.success(request, 'Изображение удалено')
+        messages.success(request, "Изображение удалено")
 
-    return redirect('employees:detail', pk=pk)
+    return redirect("employees:detail", pk=pk)

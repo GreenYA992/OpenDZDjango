@@ -29,7 +29,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("__debug__/", include(debug_toolbar.urls)),
     path("employees/", include("employees.urls")),
-    path('workplaces/', include('workplaces.urls'))
+    path("workplaces/", include("workplaces.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

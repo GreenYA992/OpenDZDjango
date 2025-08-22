@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/workplaces/workplaces.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -48,11 +53,11 @@
     </div>
 
     <div class="mt-3">
-        <a href="{% url 'workplaces:workplace-list' %}" class="btn btn-secondary">Назад к списку</a>
+        <a href="{% url 'workplaces:workplaces' %}" class="btn btn-secondary">Назад к списку</a>
         {% if workplace.employee %}
-        <a href="{% url 'workplaces:workplace-release' workplace.pk %}" class="btn btn-warning">Освободить</a>
+        <a href="{% url 'workplaces:clear_workplace' workplace.pk %}" class="btn btn-warning">Освободить</a>
         {% else %}
-        <a href="{% url 'workplaces:workplace-book' workplace.pk %}" class="btn btn-success">Забронировать</a>
+        <a href="{% url 'workplaces:booking' workplace.pk %}" class="btn btn-success">Забронировать</a>
         {% endif %}
     </div>
 </div>

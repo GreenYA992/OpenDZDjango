@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/workplaces/workplaces.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -14,7 +19,7 @@
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Да, удалить</button>
-        <a href="{% url 'workplaces:workplace-list' %}" class="btn btn-secondary">Отмена</a>
+        <a href="{% url 'workplaces:workplaces' %}" class="btn btn-secondary">Отмена</a>
     </form>
 </div>
 {% endblock %}

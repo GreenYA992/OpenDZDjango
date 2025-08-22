@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/workplaces/workplaces.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>{% if object %}Редактирование{% else %}Создание{% endif %} рабочего места</h1>
+    <h1>Создание рабочего места</h1>
 
     <form method="post">
         {% csrf_token %}
@@ -12,7 +17,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Сохранить</button>
-        <a href="{% url 'workplaces:workplace-list' %}" class="btn btn-secondary">Отмена</a>
+        <a href="{% url 'workplaces:workplaces' %}" class="btn btn-secondary">Отмена</a>
     </form>
 </div>
 {% endblock %}

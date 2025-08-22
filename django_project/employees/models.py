@@ -1,8 +1,8 @@
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import AbstractUser, Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.timezone import now
-from dateutil.relativedelta import relativedelta
 
 
 class Employee(AbstractUser):
@@ -35,7 +35,7 @@ class Employee(AbstractUser):
     """
 
     class Meta:
-        ordering = ('-date_joined',)
+        ordering = ("-date_joined",)
         verbose_name = "Сотрудник"
         verbose_name_plural = "Сотрудники"
         # app_label = 'auth'
@@ -54,11 +54,6 @@ class Employee(AbstractUser):
             return f"{delta.years} лет {delta.months} месяцев {delta.days} дней"
         return "уволен"
 
-
-
-
-
-
     def get_skills_display(self):
         """Получить строковое представление навыков сотрудника"""
         skills = self.skills.all()
@@ -68,16 +63,11 @@ class Employee(AbstractUser):
 
     def is_developer(self):
         """Проверить, является ли сотрудник разработчиком"""
-        return self.skills.filter(skill__in=['frontend', 'backend']).exists()
+        return self.skills.filter(skill__in=["frontend", "backend"]).exists()
 
     def is_tester(self):
         """Проверить, является ли сотрудник тестировщиком"""
-        return self.skills.filter(skill='testing').exists()
-
-
-
-
-
+        return self.skills.filter(skill="testing").exists()
 
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
@@ -141,7 +131,7 @@ class EmployeeImage(models.Model):
     is_main = models.BooleanField(
         default=False,
         verbose_name="Главное фото",
-        help_text="Использовать как главное фото сотрудника сотрудника"
+        help_text="Использовать как главное фото сотрудника сотрудника",
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -160,10 +150,9 @@ class EmployeeImage(models.Model):
 
         # Если это фото становится главным, снимаем флаг с других фото
         if self.is_main:
-            EmployeeImage.objects.filter(
-                employee=self.employee,
-                is_main=True
-            ).exclude(pk=self.pk).update(is_main=False)
+            EmployeeImage.objects.filter(employee=self.employee, is_main=True).exclude(
+                pk=self.pk
+            ).update(is_main=False)
 
         super().save(*args, **kwargs)
 

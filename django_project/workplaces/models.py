@@ -1,7 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 # noinspection PyUnresolvedReferences
 from employees.models import Employee
-from django.core.exceptions import ValidationError
 
 
 class Workplace(models.Model):
@@ -27,24 +27,17 @@ class Workplace(models.Model):
     def __str__(self):
         return f"Рабочее место #{self.desk_number}"
 
-
-
-
-
-
-
-
-
-
     def clean(self):
         """Валидация при сохранении"""
         super().clean()
 
         if self.employee:
             # Проверяем, что сотрудник не забронировал уже другое место
-            existing_workplace = Workplace.objects.filter(
-                employee=self.employee
-            ).exclude(pk=self.pk).first()
+            existing_workplace = (
+                Workplace.objects.filter(employee=self.employee)
+                .exclude(pk=self.pk)
+                .first()
+            )
 
             if existing_workplace:
                 raise ValidationError(
@@ -59,34 +52,39 @@ class Workplace(models.Model):
         current_desk_num = int(self.desk_number) if self.desk_number.isdigit() else 0
 
         # Получаем номера соседних столов
-        neighbor_desks = [
-            str(current_desk_num - 1),
-            str(current_desk_num + 1)
-        ]
+        neighbor_desks = [str(current_desk_num - 1), str(current_desk_num + 1)]
 
         # Находим соседние рабочие места
-        neighbor_workplaces = Workplace.objects.filter(
-            desk_number__in=neighbor_desks
-        ).exclude(employee__isnull=True).exclude(pk=self.pk)
+        neighbor_workplaces = (
+            Workplace.objects.filter(desk_number__in=neighbor_desks)
+            .exclude(employee__isnull=True)
+            .exclude(pk=self.pk)
+        )
 
         current_employee_skills = set(
-            self.employee.skills.all().values_list('skill', flat=True)
+            self.employee.skills.all().values_list("skill", flat=True)
         )
 
         for neighbor in neighbor_workplaces:
             neighbor_skills = set(
-                neighbor.employee.skills.all().values_list('skill', flat=True)
+                neighbor.employee.skills.all().values_list("skill", flat=True)
             )
 
             # Проверяем конфликт: разработчик и тестировщик на соседних столах
-            has_developer = any(skill in ['frontend', 'backend'] for skill in current_employee_skills)
-            has_tester = 'testing' in current_employee_skills
+            has_developer = any(
+                skill in ["frontend", "backend"] for skill in current_employee_skills
+            )
+            has_tester = "testing" in current_employee_skills
 
-            neighbor_has_developer = any(skill in ['frontend', 'backend'] for skill in neighbor_skills)
-            neighbor_has_tester = 'testing' in neighbor_skills
+            neighbor_has_developer = any(
+                skill in ["frontend", "backend"] for skill in neighbor_skills
+            )
+            neighbor_has_tester = "testing" in neighbor_skills
 
             # Конфликт: разработчик рядом с тестировщиком
-            if (has_developer and neighbor_has_tester) or (has_tester and neighbor_has_developer):
+            if (has_developer and neighbor_has_tester) or (
+                has_tester and neighbor_has_developer
+            ):
                 raise ValidationError(
                     f"Нельзя размещать разработчиков и тестировщиков на соседних столах! "
                     f"Стол #{neighbor.desk_number} занят {neighbor.employee} "
@@ -102,11 +100,6 @@ class Workplace(models.Model):
         """Получить соседние столы"""
         try:
             current_desk_num = int(self.desk_number)
-            return [
-                str(current_desk_num - 1),
-                str(current_desk_num + 1)
-            ]
+            return [str(current_desk_num - 1), str(current_desk_num + 1)]
         except ValueError:
             return []
-
-
