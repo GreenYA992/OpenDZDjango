@@ -35,6 +35,7 @@ class Employee(AbstractUser):
     """
 
     class Meta:
+        ordering = ('-date_joined',)
         verbose_name = "Сотрудник"
         verbose_name_plural = "Сотрудники"
         # app_label = 'auth'
