@@ -9,42 +9,49 @@
 <div class="container workplace-container">
     <h1>Рабочие места</h1>
 
-    <a href="{% url 'workplaces:add_workplace' %}" class="btn btn-primary mb-4">
-        ＋ Создать новое рабочее место
+    <a href="{% url 'workplaces:add_workplace' %}" class="btn btn-primary btn-create">
+        ＋ Создать рабочее место
     </a>
 
     <div class="row workplaces-grid">
         {% for workplace in workplaces %}
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 mb-3">
             <div class="workplace-card">
                 <h5 class="card-title">Стол #{{ workplace.desk_number }}</h5>
 
                 {% if workplace.employee %}
                 <div class="status-badge status-occupied">Занято</div>
                 <div class="workplace-info">
-                    <p><strong>👤 Сотрудник:</strong> {{ workplace.employee }}</p>
-                    <p><strong>🎯 Навыки:</strong> {{ workplace.employee.get_skills_display }}</p>
-                    <p><strong>📧 Email:</strong> {{ workplace.employee.email }}</p>
+                    <p><strong>👤</strong> {{ workplace.employee|truncatechars:15 }}</p>
+                    <p><strong>🎯</strong> {{ workplace.employee.get_skills_display|truncatechars:20 }}</p>
                 </div>
                 {% else %}
                 <div class="status-badge status-free">Свободно</div>
-                <p class="text-muted">Нет сотрудника</p>
+                <p class="text-muted text-center">Нет сотрудника</p>
                 {% endif %}
 
                 <div class="workplace-actions">
                     {% if workplace.employee %}
                     <a href="{% url 'workplaces:clear_workplace' workplace.pk %}"
-                       class="btn-workplace btn-warning">🗑️ Освободить</a>
+                       class="btn-workplace btn-warning" title="Освободить место">
+                        🗑️ Освободить
+                    </a>
                     {% else %}
                     <a href="{% url 'workplaces:booking' workplace.pk %}"
-                       class="btn-workplace btn-success">✅ Забронировать</a>
+                       class="btn-workplace btn-success" title="Забронировать место">
+                        ✅ Бронь
+                    </a>
                     {% endif %}
 
                     <a href="{% url 'workplaces:workplace_detail' workplace.pk %}"
-                       class="btn-workplace btn-info">👁️ Подробнее</a>
+                       class="btn-workplace btn-info" title="Подробная информация">
+                        👁️ Подробнее
+                    </a>
 
                     <a href="{% url 'workplaces:delete_workplace' workplace.pk %}"
-                       class="btn-workplace btn-danger">❌ Удалить</a>
+                       class="btn-workplace btn-danger" title="Удалить рабочее место">
+                        ❌ Удалить
+                    </a>
                 </div>
             </div>
         </div>
@@ -53,7 +60,7 @@
 </div>
 
 <div class="navigation-buttons">
-    <a href="/" class="btn btn-secondary back-btn">
+    <a href="/" class="btn btn-secondary">
         🏠 На главную
     </a>
 </div>

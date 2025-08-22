@@ -2,56 +2,63 @@
 
 /* ===== ОСНОВНЫЕ СТИЛИ ДЛЯ КАРТОЧЕК ===== */
 
-/* Контейнер для сетки рабочих мест */
+/* Контейнер для сетки рабочих мест - 5 В РЯД */
 .row.workplaces-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(5, 1fr); /* 5 колонок */
+    gap: 1rem; /* Уменьшаем отступ между карточками */
     margin: 0;
 }
 
-/* Карточка рабочего места */
+/* Карточка рабочего места - УМЕНЬШАЕМ */
 .workplace-card {
     background: white;
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem; /* Меньше padding */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #e9ecef;
     transition: all 0.3s ease;
     height: 100%;
+    min-height: 220px; /* Минимальная высота */
 }
 
 .workplace-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Заголовок карточки */
+/* Заголовок карточки - УМЕНЬШАЕМ */
 .workplace-card .card-title {
     color: #2c3e50;
-    font-size: 1.3rem;
+    font-size: 1.1rem; /* Меньше размер шрифта */
     font-weight: 600;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #3498db;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #3498db; /* Тонкая линия */
     text-align: center;
 }
 
-/* Текст в карточке */
+/* Текст в карточке - УМЕНЬШАЕМ */
 .workplace-card .card-text {
     color: #555;
-    line-height: 1.5;
-    margin-bottom: 0.8rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem; /* Меньше размер шрифта */
 }
 
-/* Статус места */
+.workplace-info p {
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem; /* Еще меньше */
+}
+
+/* Статус места - УМЕНЬШАЕМ */
 .status-badge {
     display: inline-block;
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem; /* Меньше padding */
+    border-radius: 15px;
+    font-size: 0.75rem; /* Меньше размер шрифта */
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 .status-free {
@@ -64,152 +71,147 @@
     color: #721c24;
 }
 
-/* ===== СТИЛИ ДЛЯ КНОПОК ===== */
+/* ===== СТИЛИ ДЛЯ КНОПОК - УМЕНЬШАЕМ ===== */
 
 /* Контейнер для кнопок */
 .workplace-actions {
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-    justify-content: center;
+    flex-direction: column; /* Вертикальное расположение */
+    gap: 0.4rem; /* Меньше отступ */
+    margin-top: 1rem;
 }
 
-/* Специальные стили для кнопок рабочих мест */
+/* Специальные стили для кнопок рабочих мест - УМЕНЬШАЕМ */
 .btn-workplace {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-    border-radius: 6px;
+    padding: 0.4rem 0.6rem; /* Меньше padding */
+    font-size: 0.75rem; /* Меньше размер шрифта */
+    border-radius: 4px;
     text-decoration: none;
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
+    text-align: center;
+    width: 100%; /* На всю ширину */
 }
 
-.btn-workplace-sm {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
-}
-
-.btn-success {
+/* Цвета кнопок */
+.btn-workplace.btn-success {
     background-color: #28a745;
     color: white;
 }
 
-.btn-success:hover {
+.btn-workplace.btn-success:hover {
     background-color: #218838;
-    color: white;
 }
 
-.btn-warning {
+.btn-workplace.btn-warning {
     background-color: #ffc107;
     color: #212529;
 }
 
-.btn-warning:hover {
+.btn-workplace.btn-warning:hover {
     background-color: #e0a800;
-    color: #212529;
 }
 
-.btn-info {
+.btn-workplace.btn-info {
     background-color: #17a2b8;
     color: white;
 }
 
-.btn-info:hover {
+.btn-workplace.btn-info:hover {
     background-color: #138496;
-    color: white;
 }
 
-.btn-danger {
+.btn-workplace.btn-danger {
     background-color: #dc3545;
     color: white;
 }
 
-.btn-danger:hover {
+.btn-workplace.btn-danger:hover {
     background-color: #c82333;
-    color: white;
 }
 
-.btn-secondary {
+.btn-workplace.btn-secondary {
     background-color: #6c757d;
     color: white;
 }
 
-.btn-secondary:hover {
+.btn-workplace.btn-secondary:hover {
     background-color: #5a6268;
-    color: white;
 }
 
-/* ===== СТИЛИ ДЛЯ ФОРМ ===== */
+/* ===== АДАПТИВНОСТЬ ДЛЯ РАЗНЫХ ЭКРАНОВ ===== */
 
-.workplace-form {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
+/* Для больших экранов - 5 в ряд */
+@media (min-width: 1200px) {
+    .row.workplaces-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
-.form-label {
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
+/* Для средних экранов - 4 в ряд */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .row.workplaces-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
-.form-select {
-    padding: 0.8rem;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 1rem;
-    width: 100%;
+/* Для планшетов - 3 в ряд */
+@media (max-width: 991px) and (min-width: 768px) {
+    .row.workplaces-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
-/* ===== СТИЛИ ДЛЯ СООБЩЕНИЙ ===== */
-
-.alert-workplace {
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    border-left: 4px solid;
+/* Для маленьких планшетов - 2 в ряд */
+@media (max-width: 767px) and (min-width: 576px) {
+    .row.workplaces-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.alert-success {
-    background-color: #d4edda;
-    border-color: #28a745;
-    color: #155724;
-}
-
-.alert-error {
-    background-color: #f8d7da;
-    border-color: #dc3545;
-    color: #721c24;
-}
-
-.alert-warning {
-    background-color: #fff3cd;
-    border-color: #ffc107;
-    color: #856404;
-}
-
-/* ===== АДАПТИВНОСТЬ ===== */
-
-@media (max-width: 768px) {
+/* Для мобильных - 1 в ряд */
+@media (max-width: 575px) {
     .row.workplaces-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
     }
 
     .workplace-card {
-        padding: 1rem;
+        min-height: auto; /* Убираем фиксированную высоту */
     }
+}
 
-    .workplace-actions {
-        flex-direction: column;
-    }
+/* ===== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ===== */
 
-    .btn-workplace {
-        width: 100%;
-        text-align: center;
-    }
+/* Иконки в тексте */
+.workplace-info strong {
+    display: inline-block;
+    min-width: 20px;
+}
+
+/* Выравнивание текста */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #6c757d !important;
+    font-style: italic;
+}
+
+/* Отступы для контейнера */
+.workplace-container {
+    padding: 1.5rem;
+}
+
+/* Кнопка создания */
+.btn-create {
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+/* Навигационные кнопки */
+.navigation-buttons {
+    margin-top: 2rem;
+    text-align: center;
 }
