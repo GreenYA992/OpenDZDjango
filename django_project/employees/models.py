@@ -54,6 +54,31 @@ class Employee(AbstractUser):
             return f"{delta.years} лет {delta.months} месяцев {delta.days} дней"
         return "уволен"
 
+
+
+
+
+
+    def get_skills_display(self):
+        """Получить строковое представление навыков сотрудника"""
+        skills = self.skills.all()
+        if skills:
+            return ", ".join([f"{skill.get_skill_display()}" for skill in skills])
+        return "Нет навыков"
+
+    def is_developer(self):
+        """Проверить, является ли сотрудник разработчиком"""
+        return self.skills.filter(skill__in=['frontend', 'backend']).exists()
+
+    def is_tester(self):
+        """Проверить, является ли сотрудник тестировщиком"""
+        return self.skills.filter(skill='testing').exists()
+
+
+
+
+
+
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
 

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Бронирование стола #{{ workplace.desk_number }}</h1>
+
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="employee_id" class="form-label">Выберите сотрудника:</label>
+            <select name="employee_id" id="employee_id" class="form-select" required>
+                <option value="">-- Выберите сотрудника --</option>
+                {% for employee in available_employees %}
+                <option value="{{ employee.id }}">
+                    {{ employee }} ({{ employee.get_skills_display }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Забронировать</button>
+        <a href="{% url 'workplaces:workplace-list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <h1>Рабочие места</h1>
+
+    {% include 'workplaces/message.html' %}
+
+    <a href="{% url 'workplaces:workplace-create' %}" class="btn btn-primary mb-3">
+        Создать новое рабочее место
+    </a>
+
+    <div class="row">
+        {% for workplace in workplaces %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Стол #{{ workplace.desk_number }}</h5>
+
+                    {% if workplace.employee %}
+                    <p class="card-text">
+                        <strong>Сотрудник:</strong> {{ workplace.employee }}<br>
+                        <strong>Навыки:</strong> {{ workplace.employee.get_skills_display }}<br>
+                        <strong>Email:</strong> {{ workplace.employee.email }}
+                    </p>
+                    <a href="{% url 'workplaces:workplace-release' workplace.pk %}"
+                       class="btn btn-warning btn-sm">Освободить</a>
+                    {% else %}
+                    <p class="card-text text-muted">Свободно</p>
+                    <a href="{% url 'workplaces:workplace-book' workplace.pk %}"
+                       class="btn btn-success btn-sm">Забронировать</a>
+                    {% endif %}
+
+                    <a href="{% url 'workplaces:workplace-detail' workplace.pk %}"
+                       class="btn btn-info btn-sm">Подробнее</a>
+                    <a href="{% url 'workplaces:workplace-delete' workplace.pk %}"
+                       class="btn btn-danger btn-sm">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

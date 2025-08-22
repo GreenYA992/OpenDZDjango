@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Освобождение стола #{{ workplace.desk_number }}</h1>
+
+    <div class="alert alert-warning">
+        <p>Вы уверены, что хотите освободить стол #{{ workplace.desk_number }} от сотрудника {{ workplace.employee }}?</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning">Да, освободить</button>
+        <a href="{% url 'workplaces:workplace-list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}
