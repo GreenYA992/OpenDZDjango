@@ -1,59 +1,69 @@
-<!-- Карточное представление -->
-    <div class="cards-section">
-        <h2>Карточный вид</h2>
-        <div class="employees-grid">
-            {% for data in employees_data %}
-            <div class="employee-card">
-                <div class="gallery-container">
-                    {% if data.main_photo %}
-                    <div class="gallery-item">
-                        <p class="image-order">Главное фото</p>
-                        <img src="{{ data.main_photo.image.url }}"
-                             alt="Главное фото {{ data.emp.username }}"
-                             class="avatar" />
-                    </div>
-                    {% else %}
-                    <div class="gallery-item">
-                        <p class="image-order">Главное фото</p>
-                        <img src="{% static 'img/noimage.jpg' %}"
-                             alt="Фото отсутствует"
-                             class="avatar" />
-                    </div>
-                    {% endif %}
-                </div>
+{% load static %}
 
-                <div class="card-header">
-                    <span class="employee-id">#{{ data.emp.id }}</span>
-                    <span class="gender-badge {% if data.emp.gender == 'M' %}male{% else %}female{% endif %}">
-                        {{ data.emp.get_gender_display }}
-                    </span>
-                </div>
-
-                <div class="card-body">
-                    <h3 class="employee-name">
-                        {{ data.emp.last_name }} {{ data.emp.first_name }}
-                    </h3>
-                    <p class="employee-username">
-                        <i class="fas fa-user"></i> {{ data.emp.username }}
-                    </p>
-                    {% if data.emp.email %}
-                    <p class="employee-email">
-                        <i class="fas fa-envelope"></i> {{ data.emp.email }}
-                    </p>
-                    {% endif %}
-                </div>
-
-                <div class="card-footer">
-                    <a href="{% url 'employees:detail' data.emp.id %}" class="btn btn-primary btn-card-details">
-                        <i class="fas fa-arrow-right"></i> Подробнее
-                    </a>
-                </div>
-            </div>
-            {% empty %}
-            <div class="no-employees-card">
-                <i class="fas fa-users-slash"></i>
-                <p>Список сотрудников пуст</p>
-            </div>
-            {% endfor %}
+<div class="employee-card">
+    <div class="gallery-container">
+        {% if data.main_photo %}
+        <div class="gallery-item">
+            <p class="image-order">Главное фото</p>
+            <img src="{{ data.main_photo.image.url }}"
+                 alt="Главное фото {{ data.emp.username }}"
+                 class="avatar" />
         </div>
+        {% else %}
+        <div class="gallery-item">
+            <p class="image-order">Главное фото</p>
+            <img src="{% static 'img/noimage.jpg' %}"
+                 alt="Фото отсутствует"
+                 class="avatar" />
+        </div>
+        {% endif %}
     </div>
+
+    <div class="card-header">
+        <span class="employee-id">#{{ data.emp.id }}</span>
+        <span class="gender-badge {% if data.emp.gender == 'M' %}male{% else %}female{% endif %}">
+            {{ data.emp.get_gender_display }}
+        </span>
+    </div>
+
+    <div class="card-body">
+        <h3 class="employee-name">
+            {{ data.emp.last_name }} {{ data.emp.first_name }}
+        </h3>
+        <p class="employee-username">
+            <i class="fas fa-user"></i> {{ data.emp.username }}
+        </p>
+        {% if data.emp.email %}
+        <p class="employee-email">
+            <i class="fas fa-envelope"></i> {{ data.emp.email }}
+        </p>
+        {% endif %}
+
+        <div class="employee-skills">
+            <p class="skills-title"><strong>Навыки:</strong></p>
+            {% if data.emp.skills.all %}
+            <ul class="skills-list">
+                {% for skill in data.emp.skills.all %}
+                <li class="skill-item">
+                    <span class="skill-name">{{ skill.get_skill_display }}</span>
+                    <span class="skill-level">(уровень {{ skill.level }}/10)</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p class="no-skills">Нет добавленных навыков</p>
+            {% endif %}
+        </div>
+        <div class="employee-experience">
+            <p><strong>Стаж:</strong> {{ data.emp.experience_full }} </p>
+        </div>
+
+
+    </div>
+
+    <div class="card-footer">
+        <a href="{% url 'employees:detail' data.emp.id %}" class="btn btn-primary btn-card-details">
+            <i class="fas fa-arrow-right"></i> Подробнее
+        </a>
+    </div>
+</div>
