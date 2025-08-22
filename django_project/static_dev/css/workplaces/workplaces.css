@@ -1,197 +1,176 @@
-/* Основные стили для приложения рабочих мест - наследуем от base.css */
+/* workplaces.css - стили для приложения рабочих мест */
 
-/* ===== ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ СТРАНИЦ WORKPLACES ===== */
+/* ===== ОСНОВНЫЕ СТИЛИ ДЛЯ КАРТОЧЕК ===== */
 
-/* Главный контейнер для всего контента рабочих мест */
-.workplace-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
+/* Контейнер для сетки рабочих мест */
+.row.workplaces-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin: 0;
 }
 
-/* Заголовок h1 на страницах рабочих мест */
-.workplace-container h1 {
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.5rem;
-    margin-bottom: 2rem;
-    color: #2c3e50;
-}
-
-/* Стили для карточек (используются в списке и деталях) */
+/* Карточка рабочего места */
 .workplace-card {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    height: 100%;
 }
 
-/* ===== СТИЛИ ДЛЯ СПИСКА РАБОЧИХ МЕСТ (workplaces.html) ===== */
-
-/* Сетка для отображения карточек рабочих мест */
-.workplaces-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+.workplace-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Отдельная карточка рабочего места в списке */
-.workplace-item {
-    background: white;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.workplace-item:hover {
-    transform: translateY(-3px);
-}
-
-/* Заголовок карточки (номер стола) */
-.workplace-number {
-    font-size: 1.3rem;
-    font-weight: bold;
+/* Заголовок карточки */
+.workplace-card .card-title {
     color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 600;
     margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #3498db;
     text-align: center;
 }
 
-/* Информация о сотруднике в карточке */
-.workplace-employee-info {
+/* Текст в карточке */
+.workplace-card .card-text {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+}
+
+/* Статус места */
+.status-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
     margin-bottom: 1rem;
 }
 
-.workplace-status {
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
 .status-free {
-    background-color: #27ae60;
-    color: white;
+    background-color: #d4edda;
+    color: #155724;
 }
 
 .status-occupied {
-    background-color: #e74c3c;
-    color: white;
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
-/* Блок с кнопками действий */
+/* ===== СТИЛИ ДЛЯ КНОПОК ===== */
+
+/* Контейнер для кнопок */
 .workplace-actions {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    margin-top: 1.5rem;
     justify-content: center;
 }
 
-/* Кнопки действий - маленький размер */
+/* Специальные стили для кнопок рабочих мест */
 .btn-workplace {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-workplace-sm {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
 }
 
-/* ===== СТИЛИ ДЛЯ ДЕТАЛЬНОЙ СТРАНИЦЫ (workplace_detail.html) ===== */
-
-/* Основная информация о рабочем месте */
-.workplace-detail-info {
-    margin-bottom: 2rem;
+.btn-success {
+    background-color: #28a745;
+    color: white;
 }
 
-.workplace-detail-info p {
-    margin-bottom: 0.8rem;
-    font-size: 1.1rem;
+.btn-success:hover {
+    background-color: #218838;
+    color: white;
 }
 
-/* Секция с соседними столами */
-.neighbors-section {
-    margin-top: 2rem;
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
 }
 
-.neighbors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+.btn-warning:hover {
+    background-color: #e0a800;
+    color: #212529;
 }
 
-/* Карточка соседнего стола */
-.neighbor-card {
-    background: #f8f9fa;
-    border-radius: 6px;
-    padding: 1rem;
-    border-left: 4px solid #3498db;
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
 }
 
-.neighbor-card.developer {
-    border-left-color: #e74c3c; /* Красная рамка для разработчиков */
+.btn-info:hover {
+    background-color: #138496;
+    color: white;
 }
 
-.neighbor-card.tester {
-    border-left-color: #f39c12; /* Оранжевая рамка для тестировщиков */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
 }
 
-/* ===== СТИЛИ ДЛЯ ФОРМ (booking.html, add_workplace.html) ===== */
+.btn-danger:hover {
+    background-color: #c82333;
+    color: white;
+}
 
-/* Контейнер для форм */
-.workplace-form-container {
-    max-width: 600px;
-    margin: 0 auto;
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    color: white;
+}
+
+/* ===== СТИЛИ ДЛЯ ФОРМ ===== */
+
+.workplace-form {
     background: white;
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Группы полей формы */
-.form-group-workplace {
-    margin-bottom: 1.5rem;
-}
-
-.form-group-workplace label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.form-group-workplace input,
-.form-group-workplace select,
-.form-group-workplace textarea {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.form-group-workplace select {
-    background-color: white;
-}
-
-/* Кнопки формы */
-.form-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-start;
-    margin-top: 2rem;
-}
-
-/* ===== СТИЛИ ДЛЯ СООБЩЕНИЙ (message.html) ===== */
-
-/* Контейнер для системных сообщений */
-.messages-container-workplace {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
 }
 
-/* Стили для алертов (наследуем от base, но можем переопределить) */
+.form-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.form-select {
+    padding: 0.8rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+/* ===== СТИЛИ ДЛЯ СООБЩЕНИЙ ===== */
+
 .alert-workplace {
-    padding: 1rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
     border-left: 4px solid;
 }
 
@@ -213,42 +192,15 @@
     color: #856404;
 }
 
-/* ===== СТИЛИ ДЛЯ СТРАНИЦ ПОДТВЕРЖДЕНИЯ (clear_workplace.html, delete_workplace.html) ===== */
-
-/* Контейнер для страниц подтверждения */
-.confirmation-container {
-    max-width: 500px;
-    margin: 0 auto;
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Предупреждающее сообщение */
-.alert-confirmation {
-    background-color: #fff3cd;
-    border: 1px solid #ffeaa7;
-    border-radius: 6px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.alert-confirmation.danger {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-
-/* ===== АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ ===== */
+/* ===== АДАПТИВНОСТЬ ===== */
 
 @media (max-width: 768px) {
-    .workplaces-grid {
+    .row.workplaces-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    .workplace-item {
+    .workplace-card {
         padding: 1rem;
     }
 
@@ -256,52 +208,8 @@
         flex-direction: column;
     }
 
-    .form-buttons {
-        flex-direction: column;
+    .btn-workplace {
+        width: 100%;
+        text-align: center;
     }
-
-    .neighbors-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .workplace-form-container,
-    .confirmation-container {
-        padding: 1rem;
-        margin: 0 0.5rem;
-    }
-}
-
-/* ===== ДОПОЛНИТЕЛЬНЫЕ УТИЛИТЫ ===== */
-
-/* Текст для свободных/занятых мест */
-.text-free {
-    color: #27ae60;
-    font-weight: bold;
-}
-
-.text-occupied {
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-/* Иконки в кнопках */
-.btn-with-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-/* Отступы для секций */
-.section-spacing {
-    margin-bottom: 2rem;
-}
-
-/* Выравнивание текста по центру */
-.text-center {
-    text-align: center;
-}
-
-/* ===== КЛАССЫ ДЛЯ ОТЛАДКИ (можно удалить в продакшене) ===== */
-.debug-border {
-    border: 1px solid red;
 }

@@ -6,41 +6,45 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="container">
+<div class="container workplace-container">
     <h1>Рабочие места</h1>
 
-    {% include 'workplaces/includes/message.html' %}
-
-    <a href="{% url 'workplaces:add_workplace' %}" class="btn btn-primary mb-3">
-        Создать новое рабочее место
+    <a href="{% url 'workplaces:add_workplace' %}" class="btn btn-primary mb-4">
+        ＋ Создать новое рабочее место
     </a>
 
-    <div class="row">
+    <div class="row workplaces-grid">
         {% for workplace in workplaces %}
         <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Стол #{{ workplace.desk_number }}</h5>
+            <div class="workplace-card">
+                <h5 class="card-title">Стол #{{ workplace.desk_number }}</h5>
 
+                {% if workplace.employee %}
+                <div class="status-badge status-occupied">Занято</div>
+                <div class="workplace-info">
+                    <p><strong>👤 Сотрудник:</strong> {{ workplace.employee }}</p>
+                    <p><strong>🎯 Навыки:</strong> {{ workplace.employee.get_skills_display }}</p>
+                    <p><strong>📧 Email:</strong> {{ workplace.employee.email }}</p>
+                </div>
+                {% else %}
+                <div class="status-badge status-free">Свободно</div>
+                <p class="text-muted">Нет сотрудника</p>
+                {% endif %}
+
+                <div class="workplace-actions">
                     {% if workplace.employee %}
-                    <p class="card-text">
-                        <strong>Сотрудник:</strong> {{ workplace.employee }}<br>
-                        <strong>Навыки:</strong> {{ workplace.employee.get_skills_display }}<br>
-                        <strong>Email:</strong> {{ workplace.employee.email }}
-                    </p>
                     <a href="{% url 'workplaces:clear_workplace' workplace.pk %}"
-                       class="btn btn-warning btn-sm">Освободить</a>
+                       class="btn-workplace btn-warning">🗑️ Освободить</a>
                     {% else %}
-                    <p class="card-text text-muted">Свободно</p>
                     <a href="{% url 'workplaces:booking' workplace.pk %}"
-                       class="btn btn-success btn-sm">Забронировать</a>
+                       class="btn-workplace btn-success">✅ Забронировать</a>
                     {% endif %}
 
                     <a href="{% url 'workplaces:workplace_detail' workplace.pk %}"
-                       class="btn btn-info btn-sm">Подробнее</a>
+                       class="btn-workplace btn-info">👁️ Подробнее</a>
+
                     <a href="{% url 'workplaces:delete_workplace' workplace.pk %}"
-                       class="btn btn-danger btn-sm">Удалить</a>
+                       class="btn-workplace btn-danger">❌ Удалить</a>
                 </div>
             </div>
         </div>
@@ -49,9 +53,8 @@
 </div>
 
 <div class="navigation-buttons">
-        <a href="/" class="btn btn-secondary back-btn">
-            <i class="fas fa-home"></i> На главную
-        </a>
+    <a href="/" class="btn btn-secondary back-btn">
+        🏠 На главную
+    </a>
 </div>
-
 {% endblock %}
