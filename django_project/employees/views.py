@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
+from django.contrib.auth.decorators import login_required
 
 from django.utils.timezone import now
 from dateutil.relativedelta import relativedelta
@@ -116,7 +117,7 @@ class EmployeeImageMixin:
         employee_image.save()
         return employee_image
 
-
+@login_required
 def add_employee_image(request, pk):
     """Добавляем фото"""
     if request.method == "POST":
@@ -135,7 +136,7 @@ def add_employee_image(request, pk):
 
     return redirect("employees:detail", pk=pk)
 
-
+@login_required
 def set_main_photo(request, pk):
     """Установка главного фото"""
     if request.method == "POST":
@@ -148,7 +149,7 @@ def set_main_photo(request, pk):
 
     return redirect("employees:detail", pk=pk)
 
-
+@login_required
 def delete_employee_image(request, pk):
     """Удаление фото"""
     if request.method == "POST":
