@@ -26,6 +26,7 @@ from workplaces import views as workplaces_views
 # noinspection PyUnresolvedReferences
 from employees.views import home_view
 
+
 urlpatterns = [
     path('', home_view, name='home'),
     #path("", TemplateView.as_view(template_name="home.html"), name="home"),
@@ -33,6 +34,10 @@ urlpatterns = [
     path("__debug__/", include(debug_toolbar.urls)),
     path("employees/", include("employees.urls")),
     path("workplaces/", include("workplaces.urls")),
+
+    path('api/', include('employees.api_urls')),
+    path('api/', include('workplaces.api_urls')),
+    path('api/auth/', include('rest_framework.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,3 +12,4 @@ urlpatterns = [
     path("<int:pk>/set-main-photo/", views.set_main_photo, name="set_main_photo"),
     path("<int:pk>/delete-image/", views.delete_employee_image, name="delete_image"),
 ]
+

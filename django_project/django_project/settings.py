@@ -53,10 +53,32 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "import_export",
     "django_cleanup.apps.CleanupConfig",
+
+    'django_filters',
+    'rest_framework',
+    'rest_framework_simplejwt',
     # Модули (Приложения)
     "employees",
     "workplaces",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 AUTH_USER_MODEL = "employees.Employee"
 # AUTH_USER_MODEL = 'auth.Employee'
